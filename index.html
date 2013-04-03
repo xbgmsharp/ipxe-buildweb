@@ -1,0 +1,395 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Generate iPXE images | open source network boot firmware</title>
+		<link rev="made" href="mailto:xbgmsharp@gmail.com"/>
+		<meta name="keywords" content="rom, etherboot, ipxe, open source"/>
+		<meta name="description" content="a dynamic iPXE image generator"/>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+		<link rel="stylesheet" type="text/css" href="css/ui.css"/>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/jquery.bpopup.min.js"></script>
+		<script type="text/javascript">
+
+		$(document).ready(function() {
+
+			$.getJSON("gitversion.php", null, function(data) {
+				//alert(data[0]);
+				var git = '<p><h2 class="wizard-header">Generating iPXE build image version ' + data[0] + '</h2></p>';
+				$("#gitabbrev").html(git);
+				var options = "<option value='master' selected>master</option>";
+				for (var i = 0; i < data.length; i++) {
+					//alert(data[i]);
+					options += '<option value="' + data[i] + '">' + data[i] + '</option>';
+				}
+				$("#gitrevision").html(options);
+			})
+
+			$.getJSON("nics.php", null, function(listnics) {
+				//alert(listnics.length);
+				var options = '<option value="all" selected>all-drivers</option>\n<option valeu="undionly">undionly</option>\n<option value="undi">undi</option>';
+				for (var i = 0; i < listnics.length; i++) {
+					//alert(listnics[i].device_name);
+					//alert(listnics[i].ipxe_name);
+					options += '<option value="' + listnics[i].ipxe_name + '">' + listnics[i].ipxe_name + '</option>';
+				}
+				$("#nics").html(options);
+			})
+
+			$.getJSON("options.php", null, function(custom) {
+				//alert(custom.length);
+
+				// List of subtitle of options	
+				var subtitle = new Object;
+				subtitle.NET_PROTO = 'Network Protocol Options:';
+				subtitle.PXE_ = 'PXE Options:';
+				subtitle.DOWNLOAD_PROTO = 'Download Protocols:';
+				subtitle.SANBOOT_PROTO = 'SAN Boot Protocols:';
+				subtitle.IMAGE = 'Image Types:';
+				subtitle._CMD = 'Command Line Options:';
+				subtitle.CRYPTO_80211 = 'Wireless Interface Options:';
+				subtitle.CONSOLE = 'Console options:';
+				subtitle.COM = 'Serial options:';
+				subtitle.ISA = 'ISA options:';
+				subtitle.PCIAPI = 'PCIAPI options:';
+				subtitle.COLOR = 'Color options:';
+
+				var listoptions = '';
+				var previous;
+				for (var i = 0; i < custom.length; i++) {
+					//alert(custom[i].name);
+					//alert(custom[i].description);
+					for (var y in subtitle) 
+					{
+						var regexp = new RegExp(y);
+						var match = regexp.exec(custom[i].name);
+						//alert(y + ' vs ' + custom[i].name + '\n' + match + ' && ' + previous);
+						if (match != null && previous != y)
+						{
+							listoptions += '<h3 class="wizard-option">'+ subtitle[y] + '</h3>'
+							previous = y;
+							break;
+						}
+					}
+					if (custom[i].type == "define") {
+						listoptions += '<label for="' + custom[i].name + '"><input type="checkbox" value="1" name="' + custom[i].file + '/' + custom[i].name + '" checked/>' + custom[i].name + ', ' + custom[i].description + '</label><br/><br/>';
+					} else {
+						listoptions += '<label for="' + custom[i].name + '"><input type="checkbox" value="0" name="' + custom[i].file + '/' + custom[i].name + '" />' + custom[i].name + ', ' + custom[i].description + '</label><br/><br/>';
+					}
+				}
+				$("#options").html(listoptions);
+			})
+
+			/* Reset from on reload */
+			$("input[name=wizardtype]:first").prop('checked', true);
+			$("#outputformatstd").prop('selectedIndex', 0);
+			$("#outputformatadv").prop('selectedIndex', 0);
+
+		        $("#formtype").change(function(){
+					var wizardtype = $('input:radio[name=wizardtype]:checked').val();
+					//alert(wizardtype);
+					if (wizardtype == "standard")
+					{
+						$("#divstandard").css({'display': 'inline'});
+						$("#divadvanced").css({'display': 'none'});
+					}
+					else if (wizardtype == "advanced")
+					{
+						$("#divstandard").css({'display': 'none'});
+						$("#divadvanced").css({'display': 'inline'});
+					}
+			});
+
+		        $("#gitrevision").change(function(){
+				var gitversion = $("#gitrevision").val();
+				var git = '<p><h2 class="wizard-header">Generating iPXE build image version ' + gitversion + '</h2></p>';
+				$("#gitabbrev").html(git);
+			});
+
+		        $("#outputformatstd").change(function(){
+					var outputformat = $("#outputformatstd").val();
+					//alert(outputformat);
+					if (outputformat == "-")
+					{
+						$("#embedded").css({'display': 'none'});
+						$("#debug").css({'display': 'none'});
+						$("#gitversion").css({'display': 'none'});
+						$("#build").css({'display': 'none'});
+					}
+					else
+					{
+						$("#embedded").css({'display': 'inline'});
+						$("#debug").css({'display': 'inline'});
+						$("#gitversion").css({'display': 'inline'});
+						$("#build").css({'display': 'inline'});
+					}
+			});
+
+		        $("#outputformatadv").change(function(){
+					var outputformat = $("#outputformatadv").val();
+					//alert(outputformat);
+					if (outputformat == "bin/rom" || outputformat == "bin/efirom")
+					{
+						$("#rom").css({'display': 'inline'});
+						$("#iface").css({'display': 'none'});
+						$("#config").css({'display': 'none'});
+						$("#embedded").css({'display': 'none'});
+						$("#debug").css({'display': 'none'});
+						$("#gitversion").css({'display': 'inline'});
+						$("#build").css({'display': 'inline'});
+					}
+					else if (outputformat == "-")
+					{
+						$("#rom").css({'display': 'none'});
+						$("#iface").css({'display': 'none'});
+						$("#config").css({'display': 'none'});
+						$("#embedded").css({'display': 'none'});
+						$("#debug").css({'display': 'none'});
+						$("#gitversion").css({'display': 'none'});
+						$("#build").css({'display': 'none'});
+					}
+					else
+					{
+						$("#rom").css({'display': 'none'});
+						$("#iface").css({'display': 'inline'});
+						$("#config").css({'display': 'inline'});
+						$("#embedded").css({'display': 'inline'});
+						$("#debug").css({'display': 'inline'});
+						$("#gitversion").css({'display': 'inline'});
+						$("#build").css({'display': 'inline'});
+					}
+			});
+
+			$("#ipxeimage").submit(function(event) {
+				/* stop form from submitting normally */
+				event.preventDefault();
+				/* Get values from form */
+				var wizard = $('input:radio[name=wizardtype]:checked').val();
+				var bindir = "";
+				var binary = "";
+				var options = "";
+				/* Get generic values from form */
+				var debug = $("#setdebug").val();
+				var revision = $("#gitrevision").val();
+				var embed = $("#embed").val().replace('\r\n', '\n');
+				if (embed == "#!ipxe") { embed = ""; }
+				if (wizard == "standard")
+				{ 	/* get values from elements on the STD wizard */
+					bindir = $("#outputformatstd").val().split("/")[0]; 
+					binary = $("#outputformatstd").val().split("/")[1];
+				}
+				else if (wizard == "advanced")
+				{	/* get values from elements on the ADV wizard */
+					bindir = $("#outputformatadv").val().split("/")[0]; 
+					binary = $("#outputformatadv").val().split("/")[1];
+					if (binary == "rom" || binary == "efirom")
+					{
+						binary = $("#pci_vendor_code").val() + $("#pci_device_code").val() + "." + binary;
+					}
+					$("#options").find("input").each(function(index) {
+						var name = $(this).prop("name");
+						var value = $(this).prop("checked") ? 1 : 0;
+						if ($(this).val() != value) {
+							console.log( index + ": " + name + ": " + $(this).val() + ": " + $(this).prop("checked") );
+							options += name + ":=" + value + "&";
+						}
+						/* Unset value for roms images */
+						debug = "";
+						embed = "";
+					});
+				}
+
+				console.log('{ BINARY: ['+ binary +'], BINDIR: ['+ bindir +'], DEBUG: ['+ debug +'], REVISION: ['+ revision +'], EMBED: ['+ embed +'] , OPTIONS: ['+ options +']}');
+
+				window.location.href = 'build.fcgi?BINARY='+binary+'&BINDIR='+bindir+'&REVISION='+revision+'&DEBUG='+debug+'&EMBED.00script.ipxe='+embed+'&'+options;
+
+			/*
+				// Send the data using post
+				var posting = $.post( url, { BINARY: binary, BINDIR: bindir, DEBUG: debug, REVISION: revision } );
+
+				// If fail the results in a div
+				posting.done(function() {
+					alert(posting.getAllResponseHeaders());
+					window.open(posting.getAllResponseHeaders() + posting.data);
+				});
+
+				// If fail the results in a div
+				posting.fail(function(data) {
+					$("#result").css({'display': 'inline'});
+					$("#failed").empty().append(data.responseText.replace("\n", "<br />","g"));
+				});
+ 			*/
+
+
+			});
+
+			$(function() {
+
+			    // Binding a click event
+			    // From jQuery v.1.7.0 use .on() instead of .bind()
+			    $('#about').bind('click', function(e) {
+
+				// Prevents the default action to be triggered. 
+				e.preventDefault();
+
+				// Triggering bPopup when click event is fired
+				$('#about_pop_up').bPopup({
+					contentContainer:'#about_pop_up',
+					loadUrl: 'about.html'
+				});
+
+			    });
+
+			});
+
+		});
+		</script>
+	</head>
+	<body>
+		<h1>
+			<a href="http://ipxe.org" title="iPXE website" target="_blank">Generate iPXE images</a> | <a href="#" id="about">About</a>
+			<div id="about_pop_up"><a class="b-close">x<a/></div>
+		</h1>
+		<div id="wrapper">
+		<form action="#" enctype="multipart/form-data" method="post" id="ipxeimage" name="ipxeimage">
+
+			<div id="gitabbrev" name="gitabbrev">
+			</div>
+
+			<div id="formtype" name="formtype">
+<p>
+This is wizard will guide you thought the step to generate a customize iPXE image.<br/>
+</p> 
+				<input type="radio" name="wizardtype" value="standard" id="standard" checked />
+				<label for="standard">Standard, for most common use</label>
+				<br/>
+				<input type="radio" name="wizardtype" value="advanced" id="advanced" />
+				<label for="advanced">Advanced, for experiment users</label>
+			</div>
+
+			<div id="divstandard" name="divstandard">
+			<div id="ofmtstd" name="ofmstd">
+				<p>
+					<h2 class="wizard-header">Choose an output format:</h2>
+					<p>
+						<a class="help" href="http://ipxe.org/download#choosing_what_to_build" target="_blank">Choosing what to build</a>
+					</p>
+					<select id="outputformatstd" name="outputformatstd">
+						<option value='-' selected>-</option>
+						<option value="bin/ipxe.iso">ISO bootable image (.iso)</option>
+						<option value="bin/ipxe.usb">USB Keychain disk image (.usb)</option>
+						<option value="bin/undionly.kpxe">UNDI only (.kpxe)</option>
+						<option value="bin-x86_64-efi/snponly.efi">EFI x86_64 snponly (.efi)</option>
+					</select>
+				</p>
+			</div>
+			</div> <!-- End STD form -->
+
+			<div id="divadvanced" name="divadvanced" style="display: none">
+			<div id="ofmtadv" name="ofmadv">
+				<p>
+					<h2 class="wizard-header">Choose an output format:</h2>
+					<p>
+						<a class="help" href="http://ipxe.org/download#choosing_what_to_build" target="_blank">Choosing what to build</a>
+					</p>
+					<select id="outputformatadv" name="outputformatadv">
+						<option value='-' selected>-</option>
+						<option value="bin/ipxe.dsk">Floppy bootable image (.dsk)</option>
+						<option value="bin/ipxe.sdsk">SYSLINUX-based bootable floppy image (.sdsk)</option>
+						<option value="bin/ipxe.iso">ISO bootable image (.iso)</option>
+						<option value="bin/ipxe.liso">ISO bootable image with legacy floppy emulation (.liso)</option>
+						<option value="bin/ipxe.lkrn">Linux kernel (SYSLINUX/GRUB/LILO) loadable image (.lkrn)</option>
+						<option value="bin/ipxe.usb">USB Keychain disk image (.usb)</option>
+						<option value="bin/rom">ROM binary (flashable) image (.rom)</option>
+						<option value="bin/hrom">ROM binary (flashable) for problem PMM BIOSES (.hrom)</option>
+						<option value="bin/ipxe.pxe">PXE bootstrap loader image [Unload PXE stack] (.pxe)</option>
+						<option value="bin/ipxe.kpxe">PXE bootstrap loader keep [Keep PXE stack method 1] (.kpxe)</option>
+						<option value="bin/ipxe.kkpxe">PXE bootstrap loader keep [Keep PXE stack method 2] (.kkpxe)</option>
+						<option value="bin-i386-efi/ipxe.efi">EFI i386 (.efi)</option>
+						<option value="bin-x86_64-efi/ipxe.efi">EFI x86_64 (.efi)</option>
+						<option value="bin/efirom">EFI ROM binary (flashable) image (.efirom)</option>
+					</select>
+				</p>
+			</div>
+
+			<div id="rom" name="rom" style="display: none">
+				<p>
+					<h2 class="wizard-header">Enter NIC device details:</h2>
+<p>
+You choose Binary ROM image as your output format, you must
+enter 4 hex digits below for PCI VENDOR CODE and PCI DEVICE CODE
+that match the NIC device for which you are making this image.
+<br/>
+</p>
+<a class="help" href="http://ipxe.org/howto/romburning" target="_blank">Information on how to determine NIC PCI IDs</a>:<br/>
+					<label for="PCI_VENDOR_CODE">PCI VENDOR CODE: <input type="text" size="6" maxlength="4" value="" id="pci_vendor_code"  name="pci_vendor_code"/></label>
+					<label for="PCI_DEVICE_CODE">PCI DEVICE CODE: <input type="text" size="6" maxlength="4" value="" id="pci_device_code" name="pci_device_code"/></label>
+<p>
+iPXE does not support all possible PCI IDs for supported NICs.
+</p>
+				</p>
+			</div>
+
+			<div id="iface" name="iface" style="display: none">
+				<p>
+					<h2 class="wizard-header">Choose a NIC type:</h2>
+					<select name="nics" id="nics">
+					</select>
+				</p>
+			</div>
+
+			<div id="config" name="config" style="display: none">
+				<p>
+					<h2 class="wizard-header">Customize image configuration options:</h2>
+					<a class="help" href="http://ipxe.org/buildcfg" target="_blank">Build configuration options</a><br/>
+					<div id="options" name="options">
+					</div>
+				</p>
+			</div>
+			</div> <!-- End ADV form -->
+
+			<div id="embedded" name="embedded" style="display: none">
+				<p>
+					<h2 class="wizard-header">Embedded script:</h2>
+					<a class="help" href="http://ipxe.org/embed" target="_blank">Read about embedded scripts</a><br/>
+					<textarea id="embed" name="embed" rows="4" cols="50">#!ipxe</textarea>
+				</p>
+			</div>
+
+			<div id="debug" name="debug" style="display: none">
+				<p>
+					<h2 class="wizard-header">Debug build:</h2>
+					<a class="help" href="http://ipxe.org/download#debug_builds" target="_blank">Read about debugging options</a><br/>
+					Enable Debug: <input id="setdebug" name="setdebug" type="text" value="" /><br/>
+				</p>
+			</div>
+
+			<div id="gitversion" name="gitversion" style="display: none">
+				<p>
+					<h2 class="wizard-header">Which revision?</h2>
+					<a class="help" href="http://git.ipxe.org/mirror/build/ipxe.git/shortlog" target="_blank">Read about GIT revision</a><br/>
+					Default master (recommended)
+					<select id="gitrevision" name="gitrevision">
+					</select>
+				</p>
+			</div>
+
+			<div id="build" name="build" style="display: none">
+				<p>
+					<h2 class="wizard-header">Ready to build?</h2>
+					<input class="buildbutton" name="proceed" id="proceed" type="submit" value="Proceed &gt;&gt;" />
+				</p>
+			</div>
+
+			<div id="result" name="result" style="display: none">
+				<p>
+					<h2 class="wizard-header">Build failed</h2>
+					<div id="failed" name="failed"></div>
+				</p>
+			</div>
+		</form>
+		</div>
+		<a class="github" href="https://github.com/xbgmsharp/ipxe-buildweb/" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+	</body>
+</html>
