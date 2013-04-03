@@ -8,5 +8,3 @@ The build.fcgi script is written in Perl and was wrote by Michael Brown.
 
 You can acces it via:
 * [rom-o-matic.eu](http://rom-o-matic.eu)
-* [rombuilder.networkboot.org](http://rombuilder.networkboot.org)
-
