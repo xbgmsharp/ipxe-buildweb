@@ -129,7 +129,7 @@
 		        $("#outputformatadv").change(function(){
 					var outputformat = $("#outputformatadv").val();
 					//alert(outputformat);
-					if (outputformat == "bin/rom" || outputformat == "bin/efirom")
+					if (outputformat == "bin/rom" || outputformat == "bin/hrom" || outputformat == "bin/efirom")
 					{
 						$("#rom").css({'display': 'inline'});
 						$("#iface").css({'display': 'none'});
@@ -183,7 +183,7 @@
 				{	/* get values from elements on the ADV wizard */
 					bindir = $("#outputformatadv").val().split("/")[0]; 
 					binary = $("#outputformatadv").val().split("/")[1];
-					if (binary == "rom" || binary == "efirom")
+					if (binary == "rom" || binary == "hrom" || binary == "efirom")
 					{
 						binary = $("#pci_vendor_code").val() + $("#pci_device_code").val() + "." + binary;
 					}
