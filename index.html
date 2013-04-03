@@ -240,13 +240,13 @@
 
 			<div id="formtype" name="formtype">
 <p>
-This is wizard will guide you thought the step to generate a customize iPXE image.<br/>
+This wizard will guide you through the customized iPXE image generation.<br/>
 </p> 
 				<input type="radio" name="wizardtype" value="standard" id="standard" checked />
 				<label for="standard">Standard, for most common use</label>
 				<br/>
 				<input type="radio" name="wizardtype" value="advanced" id="advanced" />
-				<label for="advanced">Advanced, for experiment users</label>
+				<label for="advanced">Advanced, for experienced users</label>
 			</div>
 
 			<div id="divstandard" name="divstandard">
@@ -254,7 +254,7 @@ This is wizard will guide you thought the step to generate a customize iPXE imag
 				<p>
 					<h2 class="wizard-header">Choose an output format:</h2>
 					<p>
-						<a class="help" href="http://ipxe.org/download#choosing_what_to_build" target="_blank">Choosing what to build</a>
+						<a class="help" href="http://ipxe.org/download#choosing_what_to_build" target="_blank">Help me choose</a>
 					</p>
 					<select id="outputformatstd" name="outputformatstd">
 						<option value='-' selected>-</option>
@@ -272,7 +272,7 @@ This is wizard will guide you thought the step to generate a customize iPXE imag
 				<p>
 					<h2 class="wizard-header">Choose an output format:</h2>
 					<p>
-						<a class="help" href="http://ipxe.org/download#choosing_what_to_build" target="_blank">Choosing what to build</a>
+						<a class="help" href="http://ipxe.org/download#choosing_what_to_build" target="_blank">Help me choose</a>
 					</p>
 					<select id="outputformatadv" name="outputformatadv">
 						<option value='-' selected>-</option>
@@ -298,9 +298,8 @@ This is wizard will guide you thought the step to generate a customize iPXE imag
 				<p>
 					<h2 class="wizard-header">Enter NIC device details:</h2>
 <p>
-You choose Binary ROM image as your output format, you must
-enter 4 hex digits below for PCI VENDOR CODE and PCI DEVICE CODE
-that match the NIC device for which you are making this image.
+You have chosen Binary ROM image as your output format. To match the image to
+your NIC device, please enter its PCI VENDOR CODE and PCI DEVICE CODE.
 <br/>
 </p>
 <a class="help" href="http://ipxe.org/howto/romburning" target="_blank">Information on how to determine NIC PCI IDs</a>:<br/>
