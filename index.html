@@ -203,24 +203,6 @@
 
 				window.location.href = 'build.fcgi?BINARY='+binary+'&BINDIR='+bindir+'&REVISION='+revision+'&DEBUG='+debug+'&EMBED.00script.ipxe='+embed+'&'+options;
 
-			/*
-				// Send the data using post
-				var posting = $.post( url, { BINARY: binary, BINDIR: bindir, DEBUG: debug, REVISION: revision } );
-
-				// If fail the results in a div
-				posting.done(function() {
-					alert(posting.getAllResponseHeaders());
-					window.open(posting.getAllResponseHeaders() + posting.data);
-				});
-
-				// If fail the results in a div
-				posting.fail(function(data) {
-					$("#result").css({'display': 'inline'});
-					$("#failed").empty().append(data.responseText.replace("\n", "<br />","g"));
-				});
- 			*/
-
-
 			});
 
 			$(function() {
