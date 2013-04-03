@@ -323,8 +323,8 @@ that match the NIC device for which you are making this image.
 <br/>
 </p>
 <a class="help" href="http://ipxe.org/howto/romburning" target="_blank">Information on how to determine NIC PCI IDs</a>:<br/>
-					<label for="PCI_VENDOR_CODE">PCI VENDOR CODE: <input type="text" size="6" maxlength="4" value="" id="pci_vendor_code"  name="pci_vendor_code"/></label>
-					<label for="PCI_DEVICE_CODE">PCI DEVICE CODE: <input type="text" size="6" maxlength="4" value="" id="pci_device_code" name="pci_device_code"/></label>
+					<label for="PCI_VENDOR_CODE">PCI VENDOR CODE: <input type="text" size="6" maxlength="4" value="" id="pci_vendor_code"  name="pci_vendor_code" placeholder="8086"/></label>
+					<label for="PCI_DEVICE_CODE">PCI DEVICE CODE: <input type="text" size="6" maxlength="4" value="" id="pci_device_code" name="pci_device_code" placeholder="10de"/></label>
 <p>
 iPXE does not support all possible PCI IDs for supported NICs.
 </p>
@@ -361,7 +361,7 @@ iPXE does not support all possible PCI IDs for supported NICs.
 				<p>
 					<h2 class="wizard-header">Debug build:</h2>
 					<a class="help" href="http://ipxe.org/download#debug_builds" target="_blank">Read about debugging options</a><br/>
-					Enable Debug: <input id="setdebug" name="setdebug" type="text" value="" /><br/>
+					Enable Debug: <input id="setdebug" name="setdebug" type="text" value="" placeholder="scsi:3,iscsi"/><br/>
 				</p>
 			</div>
 
