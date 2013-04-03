@@ -1,0 +1,126 @@
+/*
+#------------------------------------------------------------------------
+# Dynamic iPXE image generator
+#
+# Copyright (C) 2012-2013 Francois Lacroix. All Rights Reserved.
+# License:  GNU General Public License version 2 or later; see LICENSE.txt
+# Website:  http://ipxe.org
+# Support:  xbgmsharp@gmail.com
+#------------------------------------------------------------------------
+*/
+
+body {
+	background-color: #eee;
+	font-family: "Arial", "Helvetica", "Verdana", "sans-serif";
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	background-color: #333;
+	color: #fff;
+	font-size: 2.0em;
+	margin: 0;
+	padding: 10px;
+}
+
+h1 a {
+	color: #fff;
+	text-decoration: none;
+}
+
+h1 a:hover {
+	color: #eee;
+	text-decoration: underline;
+}
+
+h3 span {
+	font-weight: normal;
+}
+
+#about_pop_up {
+	background-color:#fff;
+	border-radius:15px;
+	color:#000;
+	display:none; 
+	padding:20px;
+	min-width:400px;
+	min-height: 180px;
+}
+
+.b-close{
+    cursor:pointer;
+    position:absolute;
+    right:10px;
+    top:5px;
+}
+
+#wrapper {
+	width: 800px;
+	background-color: #fff;
+	border: #ddd 1px solid;
+	border-radius: 10px;
+	margin: 10px;
+	padding: 10px;
+}
+
+.help {
+	cursor: help;
+	color: #666;
+	text-decoration: none;
+}
+
+.help:hover{
+	cursor: help;
+	color: #000;
+	text-decoration: underline;
+}
+
+.wizard-header {
+	background-color: #f4f4f4;
+	border-bottom: #ddd 1px solid;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	padding: 5px 10px;
+	margin: 0 0 10px 0;
+}
+
+.wizard-option {
+	background-color: #f1f1f1;
+	border-bottom: #ddd 1px solid;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	padding: 5px 20px;
+	margin: 0 0 5px 0;
+}
+
+
+#result,#build,#gitversion,#debug,#embedded {
+	display: none;
+}
+
+.buildbutton {
+	border: none;
+	outline: none;
+	border-radius: 10px;
+	color: #ffffff;
+	display: block;
+	cursor:pointer;
+	margin: 0px auto;
+	clear: both;
+	padding: 7px 25px;
+	text-shadow: 0 1px 1px #777;
+	font-weight: bold;
+	font-family:"Century Gothic", Helvetica, sans-serif;
+	font-size: 22px;
+	box-shadow: 0px 0px 3px #aaa;
+	background: #4797ED;
+}
+
+.buildbutton:hover {
+	background: #d8d8d8;
+	color: #666;
+	text-shadow: 1px 1px 1px #fff;
+}
+
