@@ -139,8 +139,8 @@
 		        $("#outputformatadv").change(function(){
 					var outputformat = $("#outputformatadv").val();
 					//alert(outputformat);
-					if (outputformat == "bin/rom" || outputformat == "bin/hrom" || outputformat == "bin/efirom")
-					{
+					if (outputformat.indexOf("rom", outputformat.length - 3) !== -1)
+					{	/* If a ROM */
 						$("#rom").css({'display': 'inline'});
 						$("#iface").css({'display': 'none'});
 						$("#config").css({'display': 'none'});
@@ -150,7 +150,7 @@
 						$("#build").css({'display': 'inline'});
 					}
 					else if (outputformat == "-")
-					{
+					{	/* If default */
 						$("#rom").css({'display': 'none'});
 						$("#iface").css({'display': 'none'});
 						$("#config").css({'display': 'none'});
@@ -193,7 +193,7 @@
 				{	/* get values from elements on the ADV wizard */
 					bindir = $("#outputformatadv").val().split("/")[0]; 
 					binary = $("#outputformatadv").val().split("/")[1];
-					if (binary == "rom" || binary == "hrom" || binary == "efirom")
+					if (binary.indexOf("rom", binary.length - 3) !== -1)
 					{
 						binary = $("#pci_vendor_code").val() + $("#pci_device_code").val() + "." + binary;
 					}
@@ -292,14 +292,19 @@ This wizard will guide you through the customized iPXE image generation.<br/>
 						<option value="bin/ipxe.liso">ISO bootable image with legacy floppy emulation (.liso)</option>
 						<option value="bin/ipxe.lkrn">Linux kernel (SYSLINUX/GRUB/LILO) loadable image (.lkrn)</option>
 						<option value="bin/ipxe.usb">USB Keychain disk image (.usb)</option>
+						<option value="--">------------------</option>
 						<option value="bin/rom">ROM binary (flashable) image (.rom)</option>
 						<option value="bin/hrom">ROM binary (flashable) for problem PMM BIOSES (.hrom)</option>
+						<option value="bin/mrom">ROM binary (flashable) for larger ROM images (.mrom)</option>
+						<option value="bin-i386-efi/efirom">EFI 32-bit ROM binary (flashable) image (.efirom)</option>
+						<option value="bin-x86_64-efi/efirom">EFI 64-bit ROM binary (flashable) image (.efirom)</option>
+						<option value="--">------------------</option>
 						<option value="bin/ipxe.pxe">PXE bootstrap loader image [Unload PXE stack] (.pxe)</option>
 						<option value="bin/ipxe.kpxe">PXE bootstrap loader keep [Keep PXE stack method 1] (.kpxe)</option>
 						<option value="bin/ipxe.kkpxe">PXE bootstrap loader keep [Keep PXE stack method 2] (.kkpxe)</option>
-						<option value="bin-i386-efi/ipxe.efi">EFI i386 (.efi)</option>
-						<option value="bin-x86_64-efi/ipxe.efi">EFI x86_64 (.efi)</option>
-						<option value="bin/efirom">EFI ROM binary (flashable) image (.efirom)</option>
+						<option value="bin/ipxe.kkkpxe">PXE bootstrap loader keep [Keep PXE stack method 3] (.kkkpxe)</option>
+						<option value="bin-i386-efi/ipxe.efi">EFI PXE bootstrap 32-bit (.efi)</option>
+						<option value="bin-x86_64-efi/ipxe.efi">EFI PXE bootstrap 64-bit (.efi)</option>
 					</select>
 				</p>
 			</div>
