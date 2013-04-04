@@ -96,79 +96,79 @@
 			$("#outputformatstd").prop('selectedIndex', 0);
 			$("#outputformatadv").prop('selectedIndex', 0);
 
-		        $("#formtype").change(function(){
-					var wizardtype = $('input:radio[name=wizardtype]:checked').val();
-					//alert(wizardtype);
-					if (wizardtype == "standard")
-					{
-						$("#divstandard").css({'display': 'inline'});
-						$("#divadvanced").css({'display': 'none'});
-					}
-					else if (wizardtype == "advanced")
-					{
-						$("#divstandard").css({'display': 'none'});
-						$("#divadvanced").css({'display': 'inline'});
-					}
+			$("#formtype").change(function(){
+				var wizardtype = $('input:radio[name=wizardtype]:checked').val();
+				//alert(wizardtype);
+				if (wizardtype == "standard")
+				{
+					$("#divstandard").css({'display': 'inline'});
+					$("#divadvanced").css({'display': 'none'});
+				}
+				else if (wizardtype == "advanced")
+				{
+					$("#divstandard").css({'display': 'none'});
+					$("#divadvanced").css({'display': 'inline'});
+				}
 			});
 
-		        $("#gitrevision").change(function(){
+			$("#gitrevision").change(function(){
 				var gitversion = $("#gitrevision").val();
 				var git = '<p><h2 class="wizard-header">Generating iPXE build image version ' + gitversion + '</h2></p>';
 				$("#gitabbrev").html(git);
 			});
 
-		        $("#outputformatstd").change(function(){
-					var outputformat = $("#outputformatstd").val();
-					//alert(outputformat);
-					if (outputformat == "-")
-					{
-						$("#embedded").css({'display': 'none'});
-						$("#debug").css({'display': 'none'});
-						$("#gitversion").css({'display': 'none'});
-						$("#build").css({'display': 'none'});
-					}
-					else
-					{
-						$("#embedded").css({'display': 'inline'});
-						$("#debug").css({'display': 'inline'});
-						$("#gitversion").css({'display': 'inline'});
-						$("#build").css({'display': 'inline'});
-					}
+			$("#outputformatstd").change(function(){
+				var outputformat = $("#outputformatstd").val();
+				//alert(outputformat);
+				if (outputformat == "-")
+				{
+					$("#embedded").css({'display': 'none'});
+					$("#debug").css({'display': 'none'});
+					$("#gitversion").css({'display': 'none'});
+					$("#build").css({'display': 'none'});
+				}
+				else
+				{
+					$("#embedded").css({'display': 'inline'});
+					$("#debug").css({'display': 'inline'});
+					$("#gitversion").css({'display': 'inline'});
+					$("#build").css({'display': 'inline'});
+				}
 			});
 
-		        $("#outputformatadv").change(function(){
-					var outputformat = $("#outputformatadv").val();
-					//alert(outputformat);
-					if (outputformat.indexOf("rom", outputformat.length - 3) !== -1)
-					{	/* If a ROM */
-						$("#rom").css({'display': 'inline'});
-						$("#iface").css({'display': 'none'});
-						$("#config").css({'display': 'none'});
-						$("#embedded").css({'display': 'inline'});
-						$("#debug").css({'display': 'none'});
-						$("#gitversion").css({'display': 'inline'});
-						$("#build").css({'display': 'inline'});
-					}
-					else if (outputformat == "-")
-					{	/* If default */
-						$("#rom").css({'display': 'none'});
-						$("#iface").css({'display': 'none'});
-						$("#config").css({'display': 'none'});
-						$("#embedded").css({'display': 'none'});
-						$("#debug").css({'display': 'none'});
-						$("#gitversion").css({'display': 'none'});
-						$("#build").css({'display': 'none'});
-					}
-					else
-					{
-						$("#rom").css({'display': 'none'});
-						$("#iface").css({'display': 'inline'});
-						$("#config").css({'display': 'inline'});
-						$("#embedded").css({'display': 'inline'});
-						$("#debug").css({'display': 'inline'});
-						$("#gitversion").css({'display': 'inline'});
-						$("#build").css({'display': 'inline'});
-					}
+			$("#outputformatadv").change(function(){
+				var outputformat = $("#outputformatadv").val();
+				//alert(outputformat);
+				if (outputformat.indexOf("rom", outputformat.length - 3) !== -1)
+				{	/* If a ROM */
+					$("#rom").css({'display': 'inline'});
+					$("#iface").css({'display': 'none'});
+					$("#config").css({'display': 'none'});
+					$("#embedded").css({'display': 'inline'});
+					$("#debug").css({'display': 'none'});
+					$("#gitversion").css({'display': 'inline'});
+					$("#build").css({'display': 'inline'});
+				}
+				else if (outputformat == "-")
+				{	/* If default */
+					$("#rom").css({'display': 'none'});
+					$("#iface").css({'display': 'none'});
+					$("#config").css({'display': 'none'});
+					$("#embedded").css({'display': 'none'});
+					$("#debug").css({'display': 'none'});
+					$("#gitversion").css({'display': 'none'});
+					$("#build").css({'display': 'none'});
+				}
+				else
+				{
+					$("#rom").css({'display': 'none'});
+					$("#iface").css({'display': 'inline'});
+					$("#config").css({'display': 'inline'});
+					$("#embedded").css({'display': 'inline'});
+					$("#debug").css({'display': 'inline'});
+					$("#gitversion").css({'display': 'inline'});
+					$("#build").css({'display': 'inline'});
+				}
 			});
 
 			$("#ipxeimage").submit(function(event) {
@@ -209,38 +209,36 @@
 					});
 				}
 
-				console.log('{ BINARY: ['+ binary +'], BINDIR: ['+ bindir +'], DEBUG: ['+ debug +'], REVISION: ['+ revision +'], EMBED: ['+ embed +'] , OPTIONS: ['+ options +']}');
+				//console.log('{ BINARY: ['+ binary +'], BINDIR: ['+ bindir +'], DEBUG: ['+ debug +'], REVISION: ['+ revision +'], EMBED: ['+ embed +'] , OPTIONS: ['+ options +']}');
 
 				window.location.href = 'build.fcgi?BINARY='+binary+'&BINDIR='+bindir+'&REVISION='+revision+'&DEBUG='+debug+'&EMBED.00script.ipxe='+embed+'&'+options;
 
 			});
 
+			/* About Popup */
 			$(function() {
 
-			    // Binding a click event
-			    // From jQuery v.1.7.0 use .on() instead of .bind()
-			    $('#about').bind('click', function(e) {
+				/* Bind a click event */
+				$('#about').on('click', function(e) {
 
-				// Prevents the default action to be triggered. 
-				e.preventDefault();
+					/* Prevents the default action to be triggered */
+					e.preventDefault();
 
-				// Triggering bPopup when click event is fired
-				$('#about_pop_up').bPopup({
-					contentContainer:'#about_pop_up',
-					loadUrl: 'about.html'
+					/* Triggering bPopup when click event is fired */
+					$('#about_pop_up').bPopup({
+						contentContainer:'#about_pop_up',
+						loadUrl: 'about.html'
+					});
 				});
-
-			    });
-
 			});
 
-		});
+		}); /* End DOM ready */
 		</script>
 	</head>
 	<body>
 		<h1>
 			<a href="http://ipxe.org" title="iPXE website" target="_blank">Generate iPXE images</a> | <a href="#" id="about">About</a>
-			<div id="about_pop_up"><a class="b-close">x<a/></div>
+			<div id="about_pop_up"><a class="b-close">x</a></div>
 		</h1>
 		<div id="wrapper">
 		<form action="#" enctype="multipart/form-data" method="post" id="ipxeimage" name="ipxeimage">
@@ -249,9 +247,9 @@
 			</div>
 
 			<div id="formtype" name="formtype">
-<p>
-This wizard will guide you through the customized iPXE image generation.<br/>
-</p> 
+				<p>
+					This wizard will guide you through the customized iPXE image generation.<br/>
+				</p>
 				<input type="radio" name="wizardtype" value="standard" id="standard" checked />
 				<label for="standard">Standard, for most common use</label>
 				<br/>
@@ -303,6 +301,7 @@ This wizard will guide you through the customized iPXE image generation.<br/>
 						<option value="bin/ipxe.kpxe">PXE bootstrap loader keep [Keep PXE stack method 1] (.kpxe)</option>
 						<option value="bin/ipxe.kkpxe">PXE bootstrap loader keep [Keep PXE stack method 2] (.kkpxe)</option>
 						<option value="bin/ipxe.kkkpxe">PXE bootstrap loader keep [Keep PXE stack method 3] (.kkkpxe)</option>
+						<option value="--">------------------</option>
 						<option value="bin-i386-efi/ipxe.efi">EFI PXE bootstrap 32-bit (.efi)</option>
 						<option value="bin-x86_64-efi/ipxe.efi">EFI PXE bootstrap 64-bit (.efi)</option>
 					</select>
@@ -312,17 +311,16 @@ This wizard will guide you through the customized iPXE image generation.<br/>
 			<div id="rom" name="rom" style="display: none">
 				<p>
 					<h2 class="wizard-header">Enter NIC device details:</h2>
-<p>
-You have chosen Binary ROM image as your output format. To match the image to
-your NIC device, please enter its PCI VENDOR CODE and PCI DEVICE CODE.
-<br/>
-</p>
-<a class="help" href="http://ipxe.org/howto/romburning" target="_blank">Information on how to determine NIC PCI IDs</a>:<br/>
+					<p>
+						You have chosen Binary ROM image as your output format. To match the image to
+						your NIC device, please enter its PCI VENDOR CODE and PCI DEVICE CODE.
+					</p>
+					<a class="help" href="http://ipxe.org/howto/romburning" target="_blank">Information on how to determine NIC PCI IDs</a>:<br/>
 					<label for="PCI_VENDOR_CODE">PCI VENDOR CODE: <input type="text" size="6" maxlength="4" value="" id="pci_vendor_code"  name="pci_vendor_code" placeholder="8086"/></label>
 					<label for="PCI_DEVICE_CODE">PCI DEVICE CODE: <input type="text" size="6" maxlength="4" value="" id="pci_device_code" name="pci_device_code" placeholder="10de"/></label>
-<p>
-iPXE does not support all possible PCI IDs for supported NICs.
-</p>
+					<p>
+						iPXE does not support all possible PCI IDs for supported NICs.
+					</p>
 				</p>
 			</div>
 
@@ -348,7 +346,7 @@ iPXE does not support all possible PCI IDs for supported NICs.
 				<p>
 					<h2 class="wizard-header">Embedded script:</h2>
 					<a class="help" href="http://ipxe.org/embed" target="_blank">Read about embedded scripts</a><br/>
-					<textarea id="embed" name="embed" rows="4" cols="50">#!ipxe</textarea>
+					<textarea id="embed" name="embed" rows="4" cols="50" placeholder="#!ipxe"></textarea>
 				</p>
 			</div>
 
