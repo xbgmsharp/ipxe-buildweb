@@ -180,9 +180,9 @@
 				var binary = "";
 				var options = "";
 				/* Get generic values from form */
-				var debug = $("#setdebug").val();
+				var debug = escape($("#setdebug").val());
 				var revision = $("#gitrevision").val();
-				var embed = $("#embed").val().replace('\r\n', '\n');
+				var embed = escape($("#embed").val());
 				if (embed == "#!ipxe") { embed = ""; }
 				if (wizard == "standard")
 				{ 	/* get values from elements on the STD wizard */
