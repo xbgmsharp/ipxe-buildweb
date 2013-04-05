@@ -13,8 +13,8 @@
 	<head>
 		<title>Generate iPXE images | open source network boot firmware</title>
 		<link rev="made" href="mailto:xbgmsharp@gmail.com"/>
-		<meta name="keywords" content="rom, etherboot, ipxe, open source"/>
-		<meta name="description" content="a dynamic iPXE image generator"/>
+		<meta name="keywords" content="rom, etherboot, ipxe, open source, rom-o-matic.eu"/>
+		<meta name="description" content="a dynamic iPXE and Etherboot network boot image generator"/>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 		<link rel="stylesheet" type="text/css" href="css/ui.css"/>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -237,7 +237,7 @@
 	</head>
 	<body>
 		<h1>
-			<a href="http://ipxe.org" title="iPXE website" target="_blank">Generate iPXE images</a> | <a href="#" id="about">About</a>
+			<a href="http://ipxe.org" title="iPXE website" target="_blank">Generate iPXE images</a> | <a href="#" id="about" title="About this website" >About</a>
 			<div id="about_pop_up"><a class="b-close">x</a></div>
 		</h1>
 		<div id="wrapper">
@@ -347,6 +347,10 @@
 					<h2 class="wizard-header">Embedded script:</h2>
 					<a class="help" href="http://ipxe.org/embed" target="_blank">Read about embedded scripts</a><br/>
 					<textarea id="embed" name="embed" rows="4" cols="50" placeholder="#!ipxe"></textarea>
+<!--
+					<br/>Or import your script:<br/>
+					<input id="embedfile" name="embedfile" type="file" />
+-->
 				</p>
 			</div>
 
@@ -383,6 +387,20 @@
 			</div>
 		</form>
 		</div>
+		<div id="notes">
+			<p>
+				<h3>Notes:</h3>
+				For help and information about getting your OS loaded with iPXE or Network boot:<br>
+				<ul>
+					<li>Visit the iPXE Home Page at <a href="http://ipxe.org/" target="_blank">http://ipxe.org/</a>.</li>
+					<li>You can discuss general iPXE issues in the iPXE <a href="http://forum.ipxe.org/" target="_blank">discussion forum</a>.</li>
+					<li><a href="https://lists.ipxe.org/mailman/listinfo/ipxe-devel" target="_blank">Subscribe</a> to the mailing list, or view the <a href="http://lists.ipxe.org/pipermail/ipxe-devel/" target="_blank">archive of past messages</a>.</li>
+					<li>Real-time help is often available on IRC on the #ipxe channel on the Freenode IRC network.</li>
+					<li>Visit the NetworkBoot Home Page at <a href="http://networkboot.org/" target="_blank">http://networkboot.org/</a>.</li>
+				</ul>
+			</p>
+		</div>
+
 		<a class="github" href="https://github.com/xbgmsharp/ipxe-buildweb/" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
 	</body>
 </html>

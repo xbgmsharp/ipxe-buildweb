@@ -50,15 +50,26 @@ h3 span {
 }
 
 .b-close{
-    cursor:pointer;
-    position:absolute;
-    right:10px;
-    top:5px;
+	cursor:pointer;
+	position:absolute;
+	right:10px;
+	top:5px;
 }
 
 #wrapper {
-	width: 800px;
+	float: left;
+	width: 50%;
 	background-color: #fff;
+	border: #ddd 1px solid;
+	border-radius: 10px;
+	margin: 10px;
+	padding: 10px;
+}
+
+#notes {
+	float: right;
+	width: 40%;
+	background-color: #ffe;
 	border: #ddd 1px solid;
 	border-radius: 10px;
 	margin: 10px;
