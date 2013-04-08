@@ -1,3 +1,12 @@
+/*
+ * ================================================================================
+ * Dynamic iPXE image generator
+ *
+ * Copyright (C) 2012-2013 Francois Lacroix. All Rights Reserved.
+ * Website: http://ipxe.org, https://github.com/xbgmsharp/ipxe-buildweb
+ * License: GNU General Public License version 3 or later; see LICENSE.txt
+ * ================================================================================
+ */
 $(document).ready(function() {
 
         $.getJSON("gitversion.php", null, function(data) {
