@@ -112,9 +112,19 @@ h3 span {
 	margin: 0 0 5px 0;
 }
 
-
 #result,#build,#gitversion,#debug,#embedded {
 	display: none;
+}
+
+#options {
+	box-shadow: 0px 0px 3px #aaa;
+	border-radius: 10px;
+	border: 2px dashed rgb(187, 187, 187);
+	border-radius: 5px 5px 5px 5px;
+}
+
+#options label {
+	padding-left: 20px;
 }
 
 .buildbutton {

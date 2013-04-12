@@ -37,18 +37,26 @@ $(document).ready(function() {
 
                 // List of subtitle of options	
                 var subtitle = new Object;
-                subtitle.NET_PROTO = 'Network Protocol Options:';
-                subtitle.PXE_ = 'PXE Options:';
-                subtitle.DOWNLOAD_PROTO = 'Download Protocols:';
-                subtitle.SANBOOT_PROTO = 'SAN Boot Protocols:';
-                subtitle.IMAGE = 'Image Types:';
-                subtitle._CMD = 'Command Line Options:';
+                subtitle._CMD = 'Command-line commands to include:';
+                subtitle.NET_PROTO = 'Network protocols:';
+                subtitle.IMAGE = 'Image types:';
+                subtitle.PXE_ = 'PXE support:';
+                subtitle.COM = 'Serial options:';
+                subtitle.DOWNLOAD_PROTO = 'Download protocols:';
+                subtitle.SANBOOT_PROTO = 'SAN boot protocols:';
                 subtitle.CRYPTO_80211 = 'Wireless Interface Options:';
                 subtitle.CONSOLE = 'Console options:';
-                subtitle.COM = 'Serial options:';
                 subtitle.ISA = 'ISA options:';
                 subtitle.PCIAPI = 'PCIAPI options:';
                 subtitle.COLOR = 'Color options:';
+                subtitle.DNS = 'Name resolution modules:';
+                subtitle.VMWARE = 'VMware options:'
+                subtitle.GDB = 'Debugger options:'
+                subtitle.NONPNP = 'ROM-specific options:';
+                subtitle.ERRMSG = 'Error message tables to include:';
+                subtitle.BANNER = 'Timer configuration:';
+                subtitle.NETDEV = 'Obscure configuration options:';
+                subtitle.PRODUCT = 'Branding options:';
 
                 var listoptions = '';
                 var previous;
@@ -59,8 +67,16 @@ $(document).ready(function() {
                         {
                                 var regexp = new RegExp(y);
                                 var match = regexp.exec(custom[i].name);
-                                //alert(y + ' vs ' + custom[i].name + '\n' + match + ' && ' + previous);
-                                if (match != null && previous != y)
+                                //if (custom[i].name.indexOf("_CMD", custom[i].name.length - 4) !== -1)
+                                /*if (custom[i].name === "PXE_CMD")
+                                {
+                                        console.log('['+ y + '] vs [' + custom[i].name + '] match:' + match + ' && previous:' + previous);
+                                }*/
+                                if (previous == y && match == y)
+                                {
+                                        break;
+                                }
+                                else if (match != null && previous != y)
                                 {
                                         listoptions += '<h3 class="wizard-option">'+ subtitle[y] + '</h3>'
                                         previous = y;
@@ -69,9 +85,13 @@ $(document).ready(function() {
                         }
                         if (custom[i].type == "define") {
                                 listoptions += '<label for="' + custom[i].name + '"><input type="checkbox" value="1" name="' + custom[i].file + '/' + custom[i].name + '" checked/>' + custom[i].name + ', ' + custom[i].description + '</label><br/><br/>';
-                        } else {
+                        } else if (custom[i].type == "undef") {
                                 listoptions += '<label for="' + custom[i].name + '"><input type="checkbox" value="0" name="' + custom[i].file + '/' + custom[i].name + '" />' + custom[i].name + ', ' + custom[i].description + '</label><br/><br/>';
-                        }
+                        } else if (custom[i].type == "input") {
+                                desc = custom[i].description;
+                                if (custom[i].name === custom[i].description) { desc = ""; }
+                                listoptions += '<label for="' + custom[i].name + '">' + custom[i].name + ': <input type="text" size="6" placeholder="' + custom[i].value.replace('"', '') + '" value="' + custom[i].value.replace('"', '') + '" name="' + custom[i].file + '/' + custom[i].name +'" /> ' + desc + '</label><br/><br/>';
+                        } else { alert("we have an issue"); }
                 }
                 $("#options").html(listoptions);
         })
@@ -182,22 +202,33 @@ $(document).ready(function() {
                         {
                                 binary = $("#pci_vendor_code").val() + $("#pci_device_code").val() + "." + binary;
                         }
-                        $("#options").find("input").each(function(index) {
+                        /* For all Checkbox in options div */
+                        $("#options").find("input:checkbox").each(function(index) {
                                 var name = $(this).prop("name");
                                 var value = $(this).prop("checked") ? 1 : 0;
                                 if ($(this).val() != value) {
-                                        console.log( index + ": " + name + ": " + $(this).val() + ": " + $(this).prop("checked") );
+                                        console.log( "Checkbox:" + index + ": " + name + " default: " + $(this).val() + " new: " + $(this).prop("checked") );
                                         options += name + ":=" + value + "&";
+                                }
+                                /* Unset value for roms images */
+                                debug = "";
+                        });
+                        /* For all text field in options div */
+                        $("#options").find("input:text").each(function(index) {
+                                var name = $(this).prop("name");
+                                var placeholder = $(this).prop("placeholder");
+                                if ($(this).val() != placeholder) {
+                                        console.log( "Text:" + index + ": " + name + " default: " + $(this).prop("placeholder") + " new: " + $(this).val());
+                                        options += name + "=" + escape($(this).val()) + "&";
                                 }
                                 /* Unset value for roms images */
                                 debug = "";
                         });
                 }
 
-                //console.log('{ BINARY: ['+ binary +'], BINDIR: ['+ bindir +'], DEBUG: ['+ debug +'], REVISION: ['+ revision +'], EMBED: ['+ embed +'] , OPTIONS: ['+ options +']}');
+                console.log('{ BINARY: ['+ binary +'], BINDIR: ['+ bindir +'], DEBUG: ['+ debug +'], REVISION: ['+ revision +'], EMBED: ['+ embed +'] , OPTIONS: ['+ options +']}');
 
                 window.location.href = 'build.fcgi?BINARY='+binary+'&BINDIR='+bindir+'&REVISION='+revision+'&DEBUG='+debug+'&EMBED.00script.ipxe='+embed+'&'+options;
-
         });
 
         /* About Popup */
