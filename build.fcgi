@@ -1,8 +1,8 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 #
 # Build ipxe binary according to options
 #
-# Initial version by Michael Brown <mcb30@ipxe.org >
+# Initial version by Michael Brown <mcb30@ipxe.org>
 # Modified version by Francois Lacroix <xbgmsharp@gmail.com>
 #------------------------------------------------------------------------
 # Dynamic iPXE image generator
