@@ -74,12 +74,22 @@ h3 span {
 	padding: 10px;
 }
 
+.spacer {
+	margin-top: 12px;
+}
+
 #drop_zone {
 	border: 2px dashed rgb(187, 187, 187);
 	border-radius: 5px 5px 5px 5px;
 	padding: 25px;
 	text-align: center;
 	color: rgb(187, 187, 187);
+}
+
+#W3valid {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
 }
 
 .help {

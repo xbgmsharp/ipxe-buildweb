@@ -23,15 +23,15 @@
 	<body>
 		<h1>
 			<a href="http://ipxe.org" title="iPXE website" target="_blank">Generate iPXE images</a> | <a href="#" id="about" title="About this website">About</a>
-			<div id="about_pop_up"><a class="b-close">x</a></div>
 		</h1>
+		<div id="about_pop_up"><a class="b-close">x</a></div>
 		<div id="wrapper">
 		<form action="#" enctype="multipart/form-data" method="post" id="ipxeimage" name="ipxeimage">
 
-			<div id="gitabbrev" name="gitabbrev">
+			<div id="gitabbrev" class="gitabbrev">
 			</div>
 
-			<div id="formtype" name="formtype">
+			<div id="formtype" class="formtype">
 				<p>
 					This wizard will guide you through the customized iPXE image generation.<br/>
 				</p>
@@ -42,9 +42,9 @@
 				<label for="advanced">Advanced, for experienced users</label>
 			</div>
 
-			<div id="divstandard" name="divstandard">
-			<div id="ofmtstd" name="ofmstd">
-				<p>
+			<div id="divstandard" class="divstandard">
+			<div id="ofmtstd" class="ofmstd">
+				<div class="spacer">
 					<h2 class="wizard-header">Choose an output format:</h2>
 					<p>
 						<a class="help" href="http://ipxe.org/download#choosing_what_to_build" target="_blank">Help me choose</a>
@@ -56,13 +56,13 @@
 						<option value="bin/undionly.kpxe">UNDI only (.kpxe)</option>
 						<option value="bin-x86_64-efi/snponly.efi">EFI x86_64 snponly (.efi)</option>
 					</select>
-				</p>
+				</div>
 			</div>
 			</div> <!-- End STD form -->
 
-			<div id="divadvanced" name="divadvanced" style="display: none">
-			<div id="ofmtadv" name="ofmadv">
-				<p>
+			<div id="divadvanced" class="divadvanced" style="display: none">
+			<div id="ofmtadv" class="ofmadv">
+				<div class="spacer">
 					<h2 class="wizard-header">Choose an output format:</h2>
 					<p>
 						<a class="help" href="http://ipxe.org/download#choosing_what_to_build" target="_blank">Help me choose</a>
@@ -90,45 +90,45 @@
 						<option value="bin-i386-efi/ipxe.efi">EFI PXE bootstrap 32-bit (.efi)</option>
 						<option value="bin-x86_64-efi/ipxe.efi">EFI PXE bootstrap 64-bit (.efi)</option>
 					</select>
-				</p>
+				</div>
 			</div>
 
-			<div id="rom" name="rom" style="display: none">
-				<p>
+			<div id="rom" class="rom" style="display: none">
+				<div class="spacer">
 					<h2 class="wizard-header">Enter NIC device details:</h2>
 					<p>
 						You have chosen Binary ROM image as your output format. To match the image to
 						your NIC device, please enter its PCI VENDOR CODE and PCI DEVICE CODE.
 					</p>
 					<a class="help" href="http://ipxe.org/howto/romburning" target="_blank">Information on how to determine NIC PCI IDs</a>:<br/>
-					<label for="PCI_VENDOR_CODE">PCI VENDOR CODE: <input type="text" size="6" maxlength="4" value="" id="pci_vendor_code" name="pci_vendor_code" placeholder="8086"/></label>
-					<label for="PCI_DEVICE_CODE">PCI DEVICE CODE: <input type="text" size="6" maxlength="4" value="" id="pci_device_code" name="pci_device_code" placeholder="10de"/></label>
+					<label for="pci_vendor_code" form="ipxeimage">PCI VENDOR CODE: <input type="text" size="6" maxlength="4" value="" id="pci_vendor_code" name="pci_vendor_code" placeholder="8086"/></label>
+					<label for="pci_device_code" form="ipxeimage">PCI DEVICE CODE: <input type="text" size="6" maxlength="4" value="" id="pci_device_code" name="pci_device_code" placeholder="10de"/></label>
 					<p>
 						iPXE does not support all possible PCI IDs for supported NICs.
 					</p>
-				</p>
+				</div>
 			</div>
 
-			<div id="iface" name="iface" style="display: none">
-				<p>
+			<div id="iface" class="iface" style="display: none">
+				<div class="spacer">
 					<h2 class="wizard-header">Choose a NIC type:</h2>
 					<select name="nics" id="nics">
 					</select>
-				</p>
+				</div>
 			</div>
 
-			<div id="config" name="config" style="display: none">
-				<p>
+			<div id="config" class="config" style="display: none">
+				<div class="spacer">
 					<h2 class="wizard-header">Customize image configuration options:</h2>
 					<a class="help" href="http://ipxe.org/buildcfg" target="_blank">Build configuration options</a><br/>
-					<div id="options" name="options">
+					<div id="options" class="options">
 					</div>
-				</p>
+				</div>
 			</div>
 			</div> <!-- End ADV form -->
 
-			<div id="embedded" name="embedded" style="display: none">
-				<p>
+			<div id="embedded" class="embedded" style="display: none">
+				<div class="spacer">
 					<h2 class="wizard-header">Embedded script:</h2>
 					<a class="help" href="http://ipxe.org/embed" target="_blank">Read about embedded scripts</a><br/>
 					<br/>Paste your script:<br/>
@@ -138,52 +138,52 @@
 					<br/><br/>Or drop your script:<br/>
 					<div id="drop_zone">Drop your script here</div>
 					<output id="list"></output>
-				</p>
+				</div>
 			</div>
 
-			<div id="debug" name="debug" style="display: none">
-				<p>
+			<div id="debug" class="debug" style="display: none">
+				<div class="spacer">
 					<h2 class="wizard-header">Debug build:</h2>
 					<a class="help" href="http://ipxe.org/download#debug_builds" target="_blank">Read about debugging options</a><br/>
 					Enable Debug: <input id="setdebug" name="setdebug" type="text" value="" placeholder="scsi:3,iscsi"/><br/>
-				</p>
+				</div>
 			</div>
 
-			<div id="gitversion" name="gitversion" style="display: none">
-				<p>
+			<div id="gitversion" class="gitversion" style="display: none">
+				<div class="spacer">
 					<h2 class="wizard-header">Which revision?</h2>
 					<a class="help" href="http://git.ipxe.org/ipxe.git/shortlog" target="_blank">Read about GIT revision</a><br/>
 					Default master (recommended)
 					<select id="gitrevision" name="gitrevision">
 					</select>
-				</p>
+				</div>
 			</div>
 
-			<div id="build" name="build" style="display: none">
-				<p>
+			<div id="build" class="build" style="display: none">
+				<div class="spacer">
 					<h2 class="wizard-header">Ready to build?</h2>
 					<input class="buildbutton" name="proceed" id="proceed" type="submit" value="Proceed &gt;&gt;" />
-				</p>
+				</div>
 			</div>
 
-			<div id="result" name="result" style="display: none">
-				<p>
+			<div id="result" class="result" style="display: none">
+				<div class="spacer">
 					<h2 class="wizard-header">Build failed</h2>
-					<div id="failed" name="failed"></div>
-				</p>
+					<div id="failed" class="failed"></div>
+				</div>
 			</div>
 		</form>
 		</div>
 
-		<div id="notes">
-			<p>
+		<div id="notes" class="notes">
+			<div class="spacer">
 				<h3>Information:</h3>
 				<ul>
 					<li><a href="#" id="about2" title="About this website">About this website</a>.</li>
 					<li><a href="ipxe-pres/" title="iPXE presentation" target="_blank">An iPXE presentation</a>.</li>
 				</ul>
-			</p>
-			<p>
+			</div>
+			<div class="spacer">
 				<h3>Notes:</h3>
 				For help and information about getting your OS loaded with iPXE or Network boot:<br>
 				<ul>
@@ -193,9 +193,17 @@
 					<li>Real-time help is often available on IRC on the #ipxe channel on the Freenode IRC network.</li>
 					<li>Visit the NetworkBoot Home Page at <a href="http://networkboot.org/" target="_blank">http://networkboot.org/</a>.</li>
 				</ul>
-			</p>
+			</div>
+		</div>
+
+		<div id="W3valid">
+			<a href="http://validator.w3.org/check/referer"><img src="images/valid-html5-button.png" width="87" height="31" alt="HTML5 Valid" title="HTML5 Valid"></a>
+			<a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="images/vcss-blue.png" width="88" height="31" alt="CSS3 Valid" title="CSS3 Valid"></a>
+			<a href="http://www.w3.org/html/logo/"><img src="images/html5-badge-h-css3-semantics.png" width="83" height="32" alt="HTML5 Powered with CSS3 / Styling, and Semantics" title="HTML5 Powered with CSS3 / Styling, and Semantics"></a>
 		</div>
 
 		<a class="github" href="https://github.com/xbgmsharp/ipxe-buildweb/" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+	
+	      </p>
 	</body>
 </html>
