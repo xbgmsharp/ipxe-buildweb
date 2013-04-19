@@ -10,6 +10,14 @@
 # License:  GNU General Public License version 3 or later; see LICENSE.txt
 # Website:  http://ipxe.org, https://github.com/xbgmsharp/ipxe-buildweb
 #------------------------------------------------------------------------
+### Dependencies
+# apt-get install libjson-any-perl libjson-xs-perl
+# or
+# perl -MCPAN -e 'install JSON'
+### Install
+# Copy the script into the ipxe source eg: /var/tmp/ipxe/src/util/
+### Run
+# The script is run by options.php
 
 use strict;
 use warnings;
