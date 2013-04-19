@@ -9,7 +9,8 @@ A web-based user interface that provide a way for the user to select any relevan
 
 ## How
 The user interface, is using HTML, CSS as well as Javascript (jQuery) and a suitable server-side language (such as Perl and PHP).
-The build.fcgi script is written in Perl and was wrote by Michael Brown. 
+All GUI options (git version/nics list/compile options) are generated dynamicaly using PHP.
+The build.fcgi script is written in Perl and was wrote by Michael Brown.
 
 ## Test
 You can acces it via [rom-o-matic.eu](http://rom-o-matic.eu)
