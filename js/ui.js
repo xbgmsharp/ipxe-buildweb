@@ -200,7 +200,7 @@ $(document).ready(function() {
                         binary = $("#outputformatadv").val().split("/")[1];
                         if (binary.indexOf("rom", binary.length - 3) !== -1)
                         {
-                                binary = $("#pci_vendor_code").val() + $("#pci_device_code").val() + "." + binary;
+                                binary = $("#pci_vendor_code").val().toLowerCase() + $("#pci_device_code").val().toLowerCase() + "." + binary;
                         }
                         /* For all Checkbox in options div */
                         $("#options").find("input:checkbox").each(function(index) {
