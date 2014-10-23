@@ -86,7 +86,11 @@ $(document).ready(function() {
                         if (custom[i].type == "define" && (custom[i].name.indexOf("BANNER") !== -1)) {
                                 desc = custom[i].description;
                                 if (custom[i].name === custom[i].description) { desc = ""; }
-                                listoptions += '<label for="' + custom[i].name + '">' + custom[i].name + ': <input type="text" size="6" placeholder="' + custom[i].description.replace('"', '') + '" value="' + custom[i].description.replace('"', '') + '" name="' + custom[i].file + '/' + custom[i].name +'" /> default:' + desc + '</label><br/><br/>';
+                                listoptions += '<label for="' + custom[i].name + '">' + custom[i].name + ': <input type="text" size="6" placeholder="' + custom[i].description.replace('"', '') + '" value="' + custom[i].description.replace('"', '') + '" name="' + custom[i].file + '/' + custom[i].name +'" /> Default: ' + desc + '</label><br/><br/>';
+                        } else if (custom[i].type == "define" && (custom[i].description.indexOf("0x") !== -1)) {
+                                desc = custom[i].description;
+                                if (custom[i].name === custom[i].description) { desc = ""; }
+                                listoptions += '<label for="' + custom[i].name + '">' + custom[i].name + ': <input type="text" size="6" placeholder="' + custom[i].description.replace('"', '') + '" value="' + custom[i].description.replace('"', '') + '" name="' + custom[i].file + '/' + custom[i].name +'" /> Default: ' + desc + '</label><br/><br/>';
 			} else if (custom[i].type == "define") {
                                 listoptions += '<label for="' + custom[i].name + '"><input type="checkbox" value="1" name="' + custom[i].file + '/' + custom[i].name + '" checked/>' + custom[i].name + ', ' + custom[i].description + '</label><br/><br/>';
                         } else if (custom[i].type == "undef") {
