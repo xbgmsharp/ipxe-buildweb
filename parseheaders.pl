@@ -11,7 +11,7 @@
 # Website:  http://ipxe.org, https://github.com/xbgmsharp/ipxe-buildweb
 #------------------------------------------------------------------------
 ### Dependencies
-# apt-get install libjson-any-perl libjson-xs-perl
+# apt-get install libjson-perl
 # or
 # perl -MCPAN -e 'install JSON'
 ### Install
