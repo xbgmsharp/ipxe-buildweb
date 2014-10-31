@@ -15,6 +15,81 @@ The build.fcgi script is written in Perl and was wrote by Michael Brown.
 ## Test
 You can acces it via [rom-o-matic.eu](http://rom-o-matic.eu)
 
+## Test using Docker
+
+* Install Docker
+[Install documentation of Docker](https://docs.docker.com/installation/)
+
+The Docker deb package are valid for Ubuntu and Debian.
+
+```bash
+$ wget http://get.docker.io/ -O - | sh
+```
+Or
+```bash
+echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+apt-get update && apt-get install -y lxc-docker
+```
+
+* Build the images
+
+The following command build the build directly from the github repository.
+
+The build process might take some time a while as it download the origin Ubuntu LTS 14.04 docker image.
+```bash
+$ docker build --rm=true --no-cache=true -t xbgmsharp/ipxe-buildweb github.com/xbgmsharp/ipxe-buildweb.git
+```
+
+Alternatively, you can build the image localy after cloning the repository.
+```bash
+$ docker build --rm=true --no-cache=true -t xbgmsharp/ipxe-buildweb .
+```
+
+* Run the container
+
+Run as a detach container
+```bash
+$ docker run -d -p 22:22 -p 8080:80 -t xbgmsharp/ipxe-buildweb
+```
+
+Or run the container with an attach shell
+```
+$ docker run -i --rm -p 22:22 -p 8080:80 -t xbgmsharp/ipxe-buildweb /bin/bash
+```
+
+* Check the IP
+
+```bash
+$ docker ps -a
+$ docker inspect CONTAINER_ID | grep IPA
+```
+
+Or both command in one
+```bash
+$ docker ps -a | grep ipxe-buildweb | awk '{print $1}' | xargs docker inspect | grep IPAddress
+```
+
+Or all in one with the ssh connection
+```bash
+$ ssh $(docker ps -a | grep ipxe-buildweb | awk '{print $1}' | xargs docker inspect | grep IPAddress | awk '{print $2}' | tr -d '"' | tr -d ',' )
+```
+
+* Login in the container via SSH
+
+User is root and password is admin.
+
+```bash
+$ ssh root@172.17.0.x
+```
+
+* Review logs
+```bash
+$ docker logs CONTAINER_ID
+```
+
+* Enjoy!
+
 ## Contributing
 
 1. Fork it
