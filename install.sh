@@ -3,10 +3,10 @@
 # Upgrade system
 apt-get update & apt-get -y dist-upgrade
 
-# Install basic complication tools and dev libraries
+# Install basic compilation tools and dev libraries
 apt-get -y install make gcc zlib1g-dev libc6-dev libssl-dev libstdc++6-4.7-dev libc-dev-bin
 
-# Install CGI perl dependencies
+# Install CGI Perl dependencies
 apt-get -y install liburi-perl libfcgi-perl libconfig-inifiles-perl libipc-system-simple-perl libsub-override-perl
 
 #  Prepare iPXE directory
@@ -36,6 +36,4 @@ git clone https://github.com/xbgmsharp/ipxe-buildweb.git
 cp parseheaders.pl /var/tmp/ipxe/src/util/
 
 # message
-echo -e "You can now configure your webserver Apache.\n"
-echo -e "Important directory:\n"
-echo -e "/var/cache/ipxe-build /var/run/ipxe-build /var/tmp/ipxe-build /var/www/ipxe-buildweb\n"
+echo -e "\nYou can now configure your webserver Apache.\nImportant directories:\n\t/var/cache/ipxe-build /var/run/ipxe-build /var/tmp/ipxe-build /var/www/ipxe-buildweb"
