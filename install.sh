@@ -28,7 +28,7 @@ apt-get -y install libapache2-mod-fcgid libapache2-mod-php5 && a2enmod fcgid php
 apt-get -y install libjson-perl libjson-any-perl libjson-xs-perl
 
 # Install to allow to build ISO and EFI binary
-apt-get -y install binutils-dev genisoimage
+apt-get -y install binutils-dev genisoimage syslinux
 
 # Prepare the git buildweb repository
 mkdir -p /var/www/ipxe-buildweb
