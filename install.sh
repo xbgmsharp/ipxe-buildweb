@@ -1,4 +1,11 @@
 #!/bin/bash
+#------------------------------------------------------------------------
+# Dynamic iPXE image generator
+#
+# Copyright (C) 2012-2015 Francois Lacroix. All Rights Reserved.
+# License:  GNU General Public License version 3 or later; see LICENSE.txt
+# Website:  http://ipxe.org, https://github.com/xbgmsharp/ipxe-buildweb
+#------------------------------------------------------------------------
 
 # Upgrade system
 apt-get update & apt-get -y dist-upgrade
@@ -27,12 +34,12 @@ apt-get -y install libapache2-mod-fcgid libapache2-mod-php5 && a2enmod fcgid php
 # Install JSON library Perl
 apt-get -y install libjson-perl libjson-any-perl libjson-xs-perl
 
-# Install to allow to build ISO and EFI binary
+# Install extra packages to allow to build ISO and EFI binary
 apt-get -y install binutils-dev genisoimage syslinux
 
 # Prepare the git buildweb repository
-mkdir -p /var/www/ipxe-buildweb
-git clone https://github.com/xbgmsharp/ipxe-buildweb.git
+mkdir -p /var/www && cd /var/www && git clone https://github.com/xbgmsharp/ipxe-buildweb.git
+cd /var/www/ipxe-buildweb
 cp parseheaders.pl /var/tmp/ipxe/src/util/
 
 # message
