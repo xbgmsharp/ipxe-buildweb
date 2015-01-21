@@ -1,10 +1,18 @@
+#------------------------------------------------------------------------
+# Dynamic iPXE image generator
+#
+# Copyright (C) 2012-2015 Francois Lacroix. All Rights Reserved.
+# License:  GNU General Public License version 3 or later; see LICENSE.txt
+# Website:  http://ipxe.org, https://github.com/xbgmsharp/ipxe-buildweb
+#------------------------------------------------------------------------
+#
 # Ubuntu LTS 14.04 + Apache2 + module + my app
 #
 # Base from ultimate-seed Dockerfile
 # https://github.com/pilwon/ultimate-seed
 #
-# Mainly to run yapdnsui
-# https://github.com/xbgmsharp/ipxe-buildweb
+# AUTHOR: xbgmsharp@gmail.com
+# WEBSITE: https://github.com/xbgmsharp/ipxe-buildweb
 #
 # DOCKER-VERSIO 1.0.0
 # VERSION 0.0.1
@@ -40,7 +48,7 @@ RUN mkdir /var/run/sshd
 RUN echo 'root:admin' | chpasswd
 
 # Add the install script in the directory.
-ADD install.sh /tmp/installsh
+ADD install.sh /tmp/install.sh
 #ADD . /app
 
 # Install it all
