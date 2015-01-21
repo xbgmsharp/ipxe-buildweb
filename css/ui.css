@@ -104,6 +104,18 @@ h3 span {
 	text-decoration: underline;
 }
 
+.help_buildcfg {
+	cursor: help;
+	color: #000;
+	text-decoration: none;
+}
+
+.help_buildcfg:hover{
+	cursor: help;
+	color: #000;
+	text-decoration: underline;
+}
+
 .wizard-header {
 	background-color: #f4f4f4;
 	border-bottom: #ddd 1px solid;
