@@ -163,7 +163,7 @@ h3 span {
 	outline: none;
 	border-radius: 10px;
 	color: #ffffff;
-	display: block;
+	display: inline;
 	cursor:pointer;
 	margin: 0px auto;
 	clear: both;
@@ -177,6 +177,30 @@ h3 span {
 }
 
 .buildbutton:hover {
+	background: #d8d8d8;
+	color: #666;
+	text-shadow: 1px 1px 1px #fff;
+}
+
+.savebutton {
+	border: none;
+	outline: none;
+	border-radius: 10px;
+	color: #ffffff;
+	display: inline;
+	cursor:pointer;
+	margin: 0px auto;
+	clear: both;
+	padding: 7px 25px;
+	text-shadow: 0 1px 1px #777;
+	font-weight: bold;
+	font-family:"Century Gothic", Helvetica, sans-serif;
+	font-size: 22px;
+	box-shadow: 0px 0px 3px #aaa;
+	background: #16A70C;
+}
+
+.savebutton:hover {
 	background: #d8d8d8;
 	color: #666;
 	text-shadow: 1px 1px 1px #fff;

@@ -24,7 +24,7 @@
 		<h1>
 			<a href="http://ipxe.org" title="iPXE website" target="_blank">Generate iPXE images</a> | <a href="#" id="about" title="About this website">About</a>
 		</h1>
-		<div id="about_pop_up"><a class="b-close">x</a></div>
+		<div id="about_pop_up"><a class="b-close">x</a><div class="content"></div></div>
 		<div id="wrapper">
 		<form action="#" enctype="multipart/form-data" method="post" id="ipxeimage" name="ipxeimage">
 
@@ -162,7 +162,10 @@
 			<div id="build" class="build" style="display: none">
 				<div class="spacer">
 					<h2 class="wizard-header">Ready to build?</h2>
-					<input class="buildbutton" name="proceed" id="proceed" type="submit" value="Proceed &gt;&gt;" />
+					<div align="center">
+						<input class="buildbutton" name="proceed" id="proceed" type="submit" value="Proceed &gt;&gt;" />
+						<input class="savebutton" name="save" id="save" type="button" value="Save buildcfg" />
+					</div>
 				</div>
 			</div>
 

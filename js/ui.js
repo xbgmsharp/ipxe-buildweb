@@ -241,6 +241,60 @@ $(document).ready(function() {
                 window.location.href = 'build.fcgi?BINARY='+binary+'&BINDIR='+bindir+'&REVISION='+revision+'&DEBUG='+debug+'&EMBED.00script.ipxe='+embed+'&'+options;
         });
 
+	/* Save buildcfg */
+        function buildcfg(evt) {
+                /* Get values from form */
+                var wizard = $('input:radio[name=wizardtype]:checked').val();
+                var bindir = "";
+                var binary = "";
+                var options = "";
+                /* Get generic values from form */
+                var debug = escape($("#setdebug").val());
+                var revision = $("#gitrevision").val();
+                var embed = escape($("#embed").val());
+                if (embed == "#!ipxe") { embed = ""; }
+                if (wizard == "standard")
+                { 	/* get values from elements on the STD wizard */
+                        bindir = $("#outputformatstd").val().split("/")[0];
+                        binary = $("#outputformatstd").val().split("/")[1];
+                }
+                else if (wizard == "advanced")
+                {	/* get values from elements on the ADV wizard */
+                        bindir = $("#outputformatadv").val().split("/")[0];
+                        binary = $("#outputformatadv").val().split("/")[1];
+                        if (binary.indexOf("rom", binary.length - 3) !== -1)
+                        {
+                                binary = $("#pci_vendor_code").val().toLowerCase() + $("#pci_device_code").val().toLowerCase() + "." + binary;
+                        }
+                        /* For all Checkbox in options div */
+                        $("#options").find("input:checkbox").each(function(index) {
+                                var name = $(this).prop("name");
+                                var value = $(this).prop("checked") ? 1 : 0;
+                                if ($(this).val() != value) {
+                                        console.log( "Checkbox:" + index + ": " + name + " default: " + $(this).val() + " new: " + $(this).prop("checked") );
+                                        options += name + ":=" + value + "&";
+                                }
+                                /* Unset value for roms images */
+                                debug = "";
+                        });
+                        /* For all text field in options div */
+                        $("#options").find("input:text").each(function(index) {
+                                var name = $(this).prop("name");
+                                var placeholder = $(this).prop("placeholder");
+                                if ($(this).val() != placeholder) {
+                                        console.log( "Text:" + index + ": " + name + " default: " + $(this).prop("placeholder") + " new: " + $(this).val());
+                                        options += name + "=" + escape($(this).val()) + "&";
+                                }
+                                /* Unset value for roms images */
+                                debug = "";
+                        });
+                }
+
+                console.log('{ BINARY: ['+ binary +'], BINDIR: ['+ bindir +'], DEBUG: ['+ debug +'], REVISION: ['+ revision +'], EMBED: ['+ embed +'] , OPTIONS: ['+ options +']}');
+                return 'build.fcgi?BINARY='+binary+'&BINDIR='+bindir+'&REVISION='+revision+'&DEBUG='+debug+'&EMBED.00script.ipxe='+embed+'&'+options;
+	}
+
+
         /* About Popup */
         $(function() {
 
@@ -265,6 +319,26 @@ $(document).ready(function() {
                         $('#about_pop_up').bPopup({
                                 contentContainer:'#about_pop_up',
                                 loadUrl: 'about.html'
+                        });
+                });
+
+                $('#save').on('click', function(e) {
+
+                        /* Prevents the default action to be triggered */
+                        e.preventDefault();
+			var self = $(this) //button
+			, content = $('.content');
+
+                        /* Triggering bPopup when click event is fired */
+                        $('#about_pop_up').bPopup({
+                                onOpen: function() {
+					var data = "<h2>Direct buildcfg URL</h2><p>Use this URL to directly retreive your bianry for later use:</p>";
+					data += "<br/>" + document.baseURI + buildcfg();
+			                content.html(data);
+				},
+				onClose: function() {
+					content.empty();
+				}
                         });
                 });
         });
