@@ -11,7 +11,7 @@
 apt-get update & apt-get -y dist-upgrade
 
 # Install basic compilation tools and dev libraries
-apt-get -y install make gcc zlib1g-dev libc6-dev libssl-dev libstdc++6-4.7-dev libc-dev-bin
+apt-get -y install make gcc zlib1g-dev libc6-dev libssl-dev libstdc++6-4.7-dev libc-dev-bin liblzma-dev
 
 # Install CGI Perl dependencies
 apt-get -y install liburi-perl libfcgi-perl libconfig-inifiles-perl libipc-system-simple-perl libsub-override-perl
