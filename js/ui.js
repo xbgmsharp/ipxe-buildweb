@@ -60,6 +60,7 @@ $(document).ready(function() {
                 subtitle.DHCP = 'DHCP timeout parameters:';
                 subtitle.PXEBS = 'PXE Boot Server timeout parameters:';
                 subtitle.USB = 'USB configuration:';
+                subtitle.HTTP = 'HTTP extensions:';
 
                 var listoptions = '';
                 var previous;
