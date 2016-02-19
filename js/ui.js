@@ -59,6 +59,7 @@ $(document).ready(function() {
                 subtitle.PRODUCT = 'Branding options:';
                 subtitle.DHCP = 'DHCP timeout parameters:';
                 subtitle.PXEBS = 'PXE Boot Server timeout parameters:';
+                subtitle.USB = 'USB configuration:';
 
                 var listoptions = '';
                 var previous;
