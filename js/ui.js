@@ -57,6 +57,8 @@ $(document).ready(function() {
                 subtitle.BANNER = 'Timer configuration:';
                 subtitle.NETDEV = 'Obscure configuration options:';
                 subtitle.PRODUCT = 'Branding options:';
+                subtitle.DHCP = 'DHCP timeout parameters:';
+                subtitle.PXEBS = 'PXE Boot Server timeout parameters:';
 
                 var listoptions = '';
                 var previous;
@@ -100,7 +102,10 @@ $(document).ready(function() {
                         } else if (custom[i].type == "input") {
                                 desc = custom[i].description;
                                 if (custom[i].name === custom[i].description) { desc = ""; }
-                                listoptions += '<label for="' + custom[i].name + '">' + custom[i].name + ': <input type="text" size="6" placeholder="' + custom[i].value.replace('"', '') + '" value="' + custom[i].value.replace('"', '') + '" name="' + custom[i].file + '/' + custom[i].name +'" /> ' + desc + '</label><br/><br/>';
+				if (custom[i].name.indexOf("PRODUCT") !== -1)
+	                                listoptions += '<label for="' + custom[i].name + '">' + custom[i].name + ': <input type="text" size="50" placeholder="' + custom[i].value.replace('"', '') + '" value="' + custom[i].value.replace('"', '') + '" name="' + custom[i].file + '/' + custom[i].name +'" /> ' + desc + '</label><br/><br/>';
+				else
+	                                listoptions += '<label for="' + custom[i].name + '">' + custom[i].name + ': <input type="text" size="6" placeholder="' + custom[i].value.replace('"', '') + '" value="' + custom[i].value.replace('"', '') + '" name="' + custom[i].file + '/' + custom[i].name +'" /> ' + desc + '</label><br/><br/>';
                         } else { alert("we have an issue"); }
                 }
                 $("#options").html(listoptions);
@@ -220,8 +225,6 @@ $(document).ready(function() {
                                         console.log( "Checkbox:" + index + ": " + name + " default: " + $(this).val() + " new: " + $(this).prop("checked") );
                                         options += name + ":=" + value + "&";
                                 }
-                                /* Unset value for roms images */
-                                debug = "";
                         });
                         /* For all text field in options div */
                         $("#options").find("input:text").each(function(index) {
@@ -231,8 +234,6 @@ $(document).ready(function() {
                                         console.log( "Text:" + index + ": " + name + " default: " + $(this).prop("placeholder") + " new: " + $(this).val());
                                         options += name + "=" + escape($(this).val()) + "&";
                                 }
-                                /* Unset value for roms images */
-                                debug = "";
                         });
                 }
 
@@ -274,8 +275,6 @@ $(document).ready(function() {
                                         console.log( "Checkbox:" + index + ": " + name + " default: " + $(this).val() + " new: " + $(this).prop("checked") );
                                         options += name + ":=" + value + "&";
                                 }
-                                /* Unset value for roms images */
-                                debug = "";
                         });
                         /* For all text field in options div */
                         $("#options").find("input:text").each(function(index) {
@@ -285,8 +284,6 @@ $(document).ready(function() {
                                         console.log( "Text:" + index + ": " + name + " default: " + $(this).prop("placeholder") + " new: " + $(this).val());
                                         options += name + "=" + escape($(this).val()) + "&";
                                 }
-                                /* Unset value for roms images */
-                                debug = "";
                         });
                 }
 
