@@ -16,7 +16,7 @@ $cache_life = '3600'; //caching time, in seconds, 1h
 $filemtime = @filemtime($cache_file);  // returns FALSE if file does not exist
 if (!$filemtime or (time() - $filemtime >= $cache_life))
 {
-	$outpout = exec("rm -f /tmp/ipxelistnics && cd /var/tmp/ipxe/src/ && /var/tmp/ipxe/src/util/niclist.pl --format json --columns ipxe_name 1>/tmp/ipxelistnics");
+	$outpout = exec("rm -f /tmp/ipxelistnics && cd /var/tmp/ipxe/src/ && /var/tmp/ipxe/src/util/niclist.pl --format json --columns ipxe_name,device_id,vendor_id 1>/tmp/ipxelistnics");
 	readfile("/tmp/ipxelistnics");
 } else {
 	readfile("/tmp/ipxelistnics");
