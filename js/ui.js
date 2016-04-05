@@ -61,6 +61,7 @@ $(document).ready(function() {
                 subtitle.PXEBS = 'PXE Boot Server timeout parameters:';
                 subtitle.USB = 'USB configuration:';
                 subtitle.HTTP = 'HTTP extensions:';
+                subtitle.VNIC = 'Virtual network devices:';
 
                 var listoptions = '';
                 var previous;
