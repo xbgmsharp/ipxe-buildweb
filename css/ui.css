@@ -116,6 +116,12 @@ h3 span {
 	text-decoration: underline;
 }
 
+.error {
+	background-color: #FF0000;
+	text-decoration: underline;
+	font-size: 14px;
+}
+
 .wizard-header {
 	background-color: #f4f4f4;
 	border-bottom: #ddd 1px solid;

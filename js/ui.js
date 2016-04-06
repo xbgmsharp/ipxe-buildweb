@@ -9,6 +9,8 @@
  */
 $(document).ready(function() {
 
+        var roms = {device_id:[], vendor_id:[]}; /* Global Object for roms ID validation */
+
         $.getJSON("gitversion.php", null, function(data) {
                 //alert(data[0]);
                 var git = '<p><h2 class="wizard-header">Generating iPXE build image version ' + data[0] + '</h2></p>';
@@ -28,6 +30,10 @@ $(document).ready(function() {
                         //alert(listnics[i].device_name);
                         //alert(listnics[i].ipxe_name);
                         options += '<option value="' + listnics[i].ipxe_name + '">' + listnics[i].ipxe_name + '</option>';
+                        if (listnics[i].device_id != null || listnics[i].vendor_id != null) {
+                            roms.device_id.push(listnics[i].device_id);
+                            roms.vendor_id.push(listnics[i].vendor_id);
+                        }
                 }
                 $("#nics").html(options);
         })
@@ -218,7 +224,18 @@ $(document).ready(function() {
                         binary = $("#outputformatadv").val().split("/")[1];
                         if (binary.indexOf("rom", binary.length - 3) !== -1)
                         {
-                                binary = $("#pci_vendor_code").val().toLowerCase() + $("#pci_device_code").val().toLowerCase() + "." + binary;
+                                /* Ensure device_id and vendor_id are valid */
+                                var pci_vendor_code = $("#pci_vendor_code").val().toLowerCase();
+                                var pci_device_code = $("#pci_device_code").val().toLowerCase();
+                                var idx_vendor_id = roms.vendor_id.indexOf( pci_vendor_code );
+                                var idx_device_id = roms.device_id.indexOf( pci_device_code );
+                                if ( ((!pci_vendor_code) || (!pci_device_code)) && (idx_vendor_id !== -1) || (idx_device_id !== -1) && (idx_vendor_id === idx_device_id)) {
+                                    binary = $("#pci_vendor_code").val().toLowerCase() + $("#pci_device_code").val().toLowerCase() + "." + binary;
+                                } else {
+                                    $("#pci_roms_id_error").css({'display': 'inline'});
+                                    $("#pci_roms_id_error").html("Invalid or Unsupported pci_vendor_code or pci_device_code <br/>");
+                                    return;
+                                }
                         }
                         /* For all Checkbox in options div */
                         $("#options").find("input:checkbox").each(function(index) {
@@ -268,7 +285,18 @@ $(document).ready(function() {
                         binary = $("#outputformatadv").val().split("/")[1];
                         if (binary.indexOf("rom", binary.length - 3) !== -1)
                         {
-                                binary = $("#pci_vendor_code").val().toLowerCase() + $("#pci_device_code").val().toLowerCase() + "." + binary;
+                                /* Ensure device_id and vendor_id are valid */
+                                var pci_vendor_code = $("#pci_vendor_code").val().toLowerCase();
+                                var pci_device_code = $("#pci_device_code").val().toLowerCase();
+                                var idx_vendor_id = roms.vendor_id.indexOf( pci_vendor_code );
+                                var idx_device_id = roms.device_id.indexOf( pci_device_code );
+                                if ( (idx_vendor_id !== -1) || (idx_device_id !== -1) && (idx_vendor_id === idx_device_id)) {
+                                      binary = $("#pci_vendor_code").val().toLowerCase() + $("#pci_device_code").val().toLowerCase() + "." + binary;
+                                } else {
+                                    $("#pci_roms_id_error").css({'display': 'inline'});
+                                    $("#pci_roms_id_error").html("Invalid or Unsupported pci_vendor_code or pci_device_code <br/>");
+                                    return;
+                                }
                         }
                         /* For all Checkbox in options div */
                         $("#options").find("input:checkbox").each(function(index) {
