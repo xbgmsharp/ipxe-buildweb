@@ -9,7 +9,7 @@
  */
 $(document).ready(function() {
 
-        var roms = {device_id:[], vendor_id:[]}; /* Global Object for roms ID validation */
+        var roms = []; /* Global Object for roms ID validation */
 
         $.getJSON("gitversion.php", null, function(data) {
                 //alert(data[0]);
@@ -30,9 +30,8 @@ $(document).ready(function() {
                         //alert(listnics[i].device_name);
                         //alert(listnics[i].ipxe_name);
                         options += '<option value="' + listnics[i].ipxe_name + '">' + listnics[i].ipxe_name + '</option>';
-                        if (listnics[i].device_id != null || listnics[i].vendor_id != null) {
-                            roms.device_id.push(listnics[i].device_id);
-                            roms.vendor_id.push(listnics[i].vendor_id);
+                        if (listnics[i].device_id != null && listnics[i].vendor_id != null) {
+                            roms.push({device_id: listnics[i].device_id, vendor_id: listnics[i].vendor_id});
                         }
                 }
                 $("#nics").html(options);
@@ -71,6 +70,7 @@ $(document).ready(function() {
 
                 var listoptions = '';
                 var previous;
+                var desc;
                 for (var i = 0; i < custom.length; i++) {
                         //alert(custom[i].name);
                         //alert(custom[i].description);
@@ -200,9 +200,8 @@ $(document).ready(function() {
                 }
         });
 
-        $("#ipxeimage").submit(function(event) {
-                /* stop form from submitting normally */
-                event.preventDefault();
+        /* Compose build.fcgi url */
+        function buildcfg() {
                 /* Get values from form */
                 var wizard = $('input:radio[name=wizardtype]:checked').val();
                 var bindir = "";
@@ -227,13 +226,15 @@ $(document).ready(function() {
                                 /* Ensure device_id and vendor_id are valid */
                                 var pci_vendor_code = $("#pci_vendor_code").val().toLowerCase();
                                 var pci_device_code = $("#pci_device_code").val().toLowerCase();
-                                var idx_vendor_id = roms.vendor_id.indexOf( pci_vendor_code );
-                                var idx_device_id = roms.device_id.indexOf( pci_device_code );
-                                if ( ((!pci_vendor_code) || (!pci_device_code)) && (idx_vendor_id !== -1) || (idx_device_id !== -1) && (idx_vendor_id === idx_device_id)) {
+                                /* using jQuery.grep as polyfill for older browsers without Array.prototype.filter */
+                                var idx_nic = $.grep(roms, function(obj) {
+                                        return obj.vendor_id == pci_vendor_code && obj.device_id == pci_device_code;
+                                });
+                                if (pci_vendor_code && pci_device_code && idx_nic && idx_nic.length > 0) {
                                     binary = $("#pci_vendor_code").val().toLowerCase() + $("#pci_device_code").val().toLowerCase() + "." + binary;
                                 } else {
                                     $("#pci_roms_id_error").css({'display': 'inline'});
-                                    $("#pci_roms_id_error").html("Invalid or Unsupported pci_vendor_code or pci_device_code <br/>");
+                                    $("#pci_roms_id_error").html("Invalid or unsupported pci_vendor_code or pci_device_code <br/>");
                                     return;
                                 }
                         }
@@ -259,68 +260,18 @@ $(document).ready(function() {
 
                 console.log('{ BINARY: ['+ binary +'], BINDIR: ['+ bindir +'], DEBUG: ['+ debug +'], REVISION: ['+ revision +'], EMBED: ['+ embed +'] , OPTIONS: ['+ options +']}');
 
-                window.location.href = 'build.fcgi?BINARY='+binary+'&BINDIR='+bindir+'&REVISION='+revision+'&DEBUG='+debug+'&EMBED.00script.ipxe='+embed+'&'+options;
-        });
-
-	/* Save buildcfg */
-        function buildcfg(evt) {
-                /* Get values from form */
-                var wizard = $('input:radio[name=wizardtype]:checked').val();
-                var bindir = "";
-                var binary = "";
-                var options = "";
-                /* Get generic values from form */
-                var debug = escape($("#setdebug").val());
-                var revision = $("#gitrevision").val();
-                var embed = escape($("#embed").val());
-                if (embed == "#!ipxe") { embed = ""; }
-                if (wizard == "standard")
-                { 	/* get values from elements on the STD wizard */
-                        bindir = $("#outputformatstd").val().split("/")[0];
-                        binary = $("#outputformatstd").val().split("/")[1];
-                }
-                else if (wizard == "advanced")
-                {	/* get values from elements on the ADV wizard */
-                        bindir = $("#outputformatadv").val().split("/")[0];
-                        binary = $("#outputformatadv").val().split("/")[1];
-                        if (binary.indexOf("rom", binary.length - 3) !== -1)
-                        {
-                                /* Ensure device_id and vendor_id are valid */
-                                var pci_vendor_code = $("#pci_vendor_code").val().toLowerCase();
-                                var pci_device_code = $("#pci_device_code").val().toLowerCase();
-                                var idx_vendor_id = roms.vendor_id.indexOf( pci_vendor_code );
-                                var idx_device_id = roms.device_id.indexOf( pci_device_code );
-                                if ( (idx_vendor_id !== -1) || (idx_device_id !== -1) && (idx_vendor_id === idx_device_id)) {
-                                      binary = $("#pci_vendor_code").val().toLowerCase() + $("#pci_device_code").val().toLowerCase() + "." + binary;
-                                } else {
-                                    $("#pci_roms_id_error").css({'display': 'inline'});
-                                    $("#pci_roms_id_error").html("Invalid or Unsupported pci_vendor_code or pci_device_code <br/>");
-                                    return;
-                                }
-                        }
-                        /* For all Checkbox in options div */
-                        $("#options").find("input:checkbox").each(function(index) {
-                                var name = $(this).prop("name");
-                                var value = $(this).prop("checked") ? 1 : 0;
-                                if ($(this).val() != value) {
-                                        console.log( "Checkbox:" + index + ": " + name + " default: " + $(this).val() + " new: " + $(this).prop("checked") );
-                                        options += name + ":=" + value + "&";
-                                }
-                        });
-                        /* For all text field in options div */
-                        $("#options").find("input:text").each(function(index) {
-                                var name = $(this).prop("name");
-                                var placeholder = $(this).prop("placeholder");
-                                if ($(this).val() != placeholder) {
-                                        console.log( "Text:" + index + ": " + name + " default: " + $(this).prop("placeholder") + " new: " + $(this).val());
-                                        options += name + "=" + escape($(this).val()) + "&";
-                                }
-                        });
-                }
-
-                console.log('{ BINARY: ['+ binary +'], BINDIR: ['+ bindir +'], DEBUG: ['+ debug +'], REVISION: ['+ revision +'], EMBED: ['+ embed +'] , OPTIONS: ['+ options +']}');
                 return 'build.fcgi?BINARY='+binary+'&BINDIR='+bindir+'&REVISION='+revision+'&DEBUG='+debug+'&EMBED.00script.ipxe='+embed+'&'+options;
-	}
+        };
+
+
+        $("#ipxeimage").submit(function(event) {
+                /* stop form from submitting normally */
+                event.preventDefault();
+                var url = buildcfg();
+                if (url) {                
+                         window.location.href = url;
+                };
+        });
 
 
         /* About Popup */
