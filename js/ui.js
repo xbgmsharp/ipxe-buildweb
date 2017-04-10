@@ -311,7 +311,7 @@ $(document).ready(function() {
                         /* Triggering bPopup when click event is fired */
                         $('#about_pop_up').bPopup({
                                 onOpen: function() {
-					var data = "<h2>Direct buildcfg URL</h2><p>Use this URL to directly retreive your bianry for later use:</p>";
+					var data = "<h2>Direct buildcfg URL</h2><p>Use this URL to directly retreive your binary for later use:</p>";
 					data += "<br/>" + document.baseURI + buildcfg();
 			                content.html(data);
 				},
