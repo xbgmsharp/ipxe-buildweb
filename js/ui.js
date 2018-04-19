@@ -25,7 +25,7 @@ $(document).ready(function() {
 
         $.getJSON("nics.php", null, function(listnics) {
                 //alert(listnics.length);
-                var options = '<option value="all" selected>all-drivers</option>\n<option valeu="undionly">undionly</option>\n<option value="undi">undi</option>';
+                var options = '<option value="all" selected>all-drivers</option>\n<option value="undionly">undionly</option>\n<option value="undi">undi</option>';
                 for (var i = 0; i < listnics.length; i++) {
                         //alert(listnics[i].device_name);
                         //alert(listnics[i].ipxe_name);
