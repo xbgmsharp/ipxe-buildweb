@@ -263,6 +263,94 @@ $(document).ready(function() {
                 return 'build.fcgi?BINARY='+binary+'&BINDIR='+bindir+'&REVISION='+revision+'&DEBUG='+debug+'&EMBED.00script.ipxe='+embed+'&'+options;
         };
 
+		/* Update fields with defaults from current URL */
+		function loadcfg(delay) {
+			/* if the form is not ready, wait a while */
+			if ($("#gitrevision,#nics,#options").length != 3
+				|| $("#gitrevision").html().trim().length == 0
+				|| $("#nics").html().trim().length == 0
+				|| $("#options").html().trim().length == 0
+			) {
+				if (typeof delay == "undefined") {
+					delay = 0;
+				}
+				if (delay < 700) {
+					delay = (delay*2)+100;
+				} else if (delay < 3000) {
+					delay += 100
+				} else {
+					delay = 3000
+				}
+				setTimeout(function(){loadcfg(delay);}, delay);
+				return;
+			}
+			/* Parse querystring and generate args */
+			var querystring = window.location.search;
+			querystring = querystring.replace(/^\?+/, '');
+			if (querystring == "") return;
+			querystring = querystring.split('&');
+			var args = {};
+			querystring.forEach(function(item){
+				var key = item.split('=', 1)[0];
+				var value = item.substr(key.length + 1);
+				key = key.replace(/:$/, '');
+				args[key] = value;
+			});
+			/* Get values from args */
+			//$('input:radio[name=wizardtype]#advanced').prop('checked', true);
+			$('input:radio[name=wizardtype]#advanced').click();
+			var bindir = (args['BINDIR'] > "") ? args['BINDIR'] : "";
+			var binary = (args['BINARY'] > "") ? args['BINARY'] : "";
+			var debug = (args['DEBUG'] > "") ? args['DEBUG'] : "";
+			var revision = (args['REVISION'] > "") ? args['REVISION'] : "";
+			var embed = (args['EMBED.00script.ipxe'] > "") ? args['EMBED.00script.ipxe'] : "";
+			/* parse pci id for rom images */
+			if (binary.indexOf("rom", binary.length - 3) !== -1)
+			{
+				var pci_id_code = binary.split('.', 1)[0];
+				binary = binary.substr(pci_id_code.length + 1);
+				if (pci_id_code.length != 8) {
+					console.error("Unknown format for pci id: ", pci_id_code);
+				} else {
+					/* Ensure device_id and vendor_id are valid */
+					var pci_vendor_code = pci_id_code.substr(0,4);
+					var pci_device_code = pci_id_code.substr(4,4);
+					$("#pci_vendor_code").val(pci_vendor_code).change();
+					$("#pci_device_code").val(pci_device_code).change();
+					/* using jQuery.grep as polyfill for older browsers without Array.prototype.filter */
+					var idx_nic = $.grep(roms, function(obj) {
+						return obj.vendor_id == pci_vendor_code && obj.device_id == pci_device_code;
+					});
+					if (!pci_vendor_code || !pci_device_code || !idx_nic || idx_nic.length == 0) {
+						$("#pci_roms_id_error").css({'display': 'inline'});
+						$("#pci_roms_id_error").html("Invalid or unsupported pci_vendor_code or pci_device_code <br/>");
+					}
+				}
+			}
+			/* build up full binary string */
+			var fullbinary = bindir + "/" + binary;
+			/* Set values in form */
+			$("#setdebug").val(unescape(debug));
+			$("#gitrevision").val(unescape(revision));
+			$("#embed").val(unescape(embed))
+			/* Set values for elements in the ADV wizard */
+			$("#outputformatadv").val(fullbinary).change();
+			/* For all Checkboxes in options div */
+			$("#options").find("input:checkbox").each(function(index) {
+				var name = $(this).prop("name");
+				var value = $(this).prop("checked") ? 1 : 0;
+				if (typeof args[name] != "undefined" && value != args[name]) {
+					$(this).prop("checked", args[name] == 1);
+				}
+			});
+			/* For all text field in options div */
+			$("#options").find("input:text").each(function(index) {
+				var name = $(this).prop("name");
+				if (typeof args[name] != "undefined") {
+					$(this).val(args[name]);
+				}
+			});
+		}
 
         $("#ipxeimage").submit(function(event) {
                 /* stop form from submitting normally */
@@ -325,6 +413,7 @@ $(document).ready(function() {
 				}
                         });
                 });
+				setTimeout(loadcfg, 50);
         });
 
         /* Input file */
