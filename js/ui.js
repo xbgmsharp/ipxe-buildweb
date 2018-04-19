@@ -311,8 +311,13 @@ $(document).ready(function() {
                         /* Triggering bPopup when click event is fired */
                         $('#about_pop_up').bPopup({
                                 onOpen: function() {
+					var baseURI = document.baseURI.replace(window.location.search,'').replace(/index\.html$/,'');
+					var config = buildcfg();
 					var data = "<h2>Direct buildcfg URL</h2><p>Use this URL to directly retreive your binary for later use:</p>";
-					data += "<br/>" + document.baseURI + buildcfg();
+					data += "<br/>" + baseURI + config;
+					data += "<br/><h2>Editable Configuration URL</h2><p>Use this URL to adjust your binary's setup:</p>";
+					var editcfg = config.replace(/^[^?]*\?/,'?');
+					data += "<br/>" + baseURI + editcfg;
 			                content.html(data);
 				},
 				onClose: function() {
