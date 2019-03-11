@@ -44,3 +44,28 @@ cp parseheaders.pl /var/tmp/ipxe/src/util/
 
 # message
 echo -e "\nYou can now configure your webserver Apache.\nImportant directories:\n\t/var/cache/ipxe-build /var/run/ipxe-build /var/tmp/ipxe-build /var/www/ipxe-buildweb"
+
+# setting up apache2
+cat << EOF > /etc/apache2/sites-enabled/000-default.conf
+<VirtualHost *:80>
+	ServerAdmin webmaster@localhost
+	DocumentRoot /var/www/ipxe-buildweb
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+EOF
+
+cat << EOF > /etc/apache2/mods-enabled/fcgid.conf
+<IfModule mod_fcgid.c>
+    FcgidConnectTimeout 20
+    <IfModule mod_mime.c>
+        AddHandler fcgid-script .fcgi
+    </IfModule>
+    <Files ~ (\.fcgi)>
+        SetHandler fcgid-script
+        Options +FollowSymLinks +ExecCGI
+    </Files>
+</IfModule>
+EOF

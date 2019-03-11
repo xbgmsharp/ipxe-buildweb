@@ -49,6 +49,7 @@ RUN echo 'root:admin' | chpasswd
 
 # Add the install script in the directory.
 ADD install.sh /tmp/install.sh
+ADD start.sh /etc/start.sh
 #ADD . /app
 
 # Install it all
@@ -63,7 +64,7 @@ WORKDIR /var/www/ipxe-buildweb
 
 # Define default command.
 # Start ssh and other services.
-CMD ["/bin/bash", "/tmp/install.sh"]
+#CMD ["/bin/bash", "/tmp/install.sh"]
 
 # Expose ports.
 EXPOSE 22 80
@@ -74,3 +75,10 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Make sure the package repository is up to date
 ONBUILD apt-get update && apt-get -y upgrade
 ONBUILD apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN chmod +x /var/www/ipxe-buildweb/install.sh
+RUN chmod +x /etc/start.sh
+
+RUN /etc/init.d/apache2 start
+#ENTRYPOINT ["/usr/bin/tail","-f","/var/log/apache2/access.log"]
+ENTRYPOINT ["/etc/start.sh"]
