@@ -15,13 +15,20 @@ The build.fcgi script is written in Perl and was wrote by Michael Brown.
 ## Test
 You can acces it via [rom-o-matic.eu](http://rom-o-matic.eu)
 
-## Using Official DockerHub image
+## Using Official DockerHub image [![Build Status](https://travis-ci.com/xbgmsharp/ipxe-buildweb.svg?branch=master)](https://travis-ci.com/xbgmsharp/ipxe-buildweb)
 
 [![dockeri.co](https://dockeri.co/image/xbgmsharp/ipxe-buildweb)](https://hub.docker.com/r/xbgmsharp/ipxe-buildweb)
+
+* Supported tags:
+
+- `latest` - Latest ([Dockerfile](https://github.com/xbgmsharp/ipxe-buildweb/blob/master/Dockerfile))
+
+> The docker image is updated daily by a cron job from ([Travis CI](https://travis-ci.org/xbgmsharp/ipxe-buildweb)).
 
 * Supported architectures: x86-64
 
 * Run ipxe-buildweb
+
 After a successful [Docker installation](https://docs.docker.com/engine/installation/) you just need to execute the following command in the shell:
 
 ```bash
@@ -96,6 +103,7 @@ $ ssh root@172.17.0.x
 ```
 
 * Review logs
+
 ```bash
 $ docker logs CONTAINER_ID
 ```
