@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------
 # Dynamic iPXE image generator
 #
-# Copyright (C) 2012-2018 Francois Lacroix. All Rights Reserved.
+# Copyright (C) 2012-2019 Francois Lacroix. All Rights Reserved.
 # License:  GNU General Public License version 3 or later; see LICENSE.txt
 # Website:  http://ipxe.org, https://github.com/xbgmsharp/ipxe-buildweb
 #------------------------------------------------------------------------
@@ -14,7 +14,7 @@
 # AUTHOR: xbgmsharp@gmail.com
 # WEBSITE: https://github.com/xbgmsharp/ipxe-buildweb
 #
-# DOCKER-VERSIO 1.0.0
+# DOCKER-VERSION 1.0.0
 # VERSION 0.0.1
 
 # Pull base image.
