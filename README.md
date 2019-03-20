@@ -15,21 +15,33 @@ The build.fcgi script is written in Perl and was wrote by Michael Brown.
 ## Test
 You can acces it via [rom-o-matic.eu](http://rom-o-matic.eu)
 
+## Using Official DockerHub image
+
+[![dockeri.co](https://dockeri.co/image/xbgmsharp/ipxe-buildweb)](https://hub.docker.com/r/xbgmsharp/ipxe-buildweb)
+
+* Supported architectures: x86-64
+
+* Run ipxe-buildweb
+After a successful [Docker installation](https://docs.docker.com/engine/installation/) you just need to execute the following command in the shell:
+
+```bash
+docker pull xbgmsharp/ipxe-buildweb
+docker run  -d \
+	--publish 8080:80 \
+	--publish 22:22 \
+	--name ipxe-buildweb \
+	xbgmsharp/ipxe-buildweb
+```
+
 ## Test using Docker
 
 * Install Docker
-[Install documentation of Docker](https://docs.docker.com/installation/)
+[Install documentation of Docker](https://docs.docker.com/engine/installation/)
 
 The Docker deb package are valid for Ubuntu and Debian.
 
 ```bash
 $ wget http://get.docker.io/ -O - | sh
-```
-Or
-```bash
-echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-apt-get update && apt-get install -y lxc-docker
 ```
 
 * Build the images
