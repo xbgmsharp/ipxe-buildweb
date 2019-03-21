@@ -23,7 +23,7 @@ You can acces it via [rom-o-matic.eu](http://rom-o-matic.eu)
 
 `latest` - Latest ([Dockerfile](https://github.com/xbgmsharp/ipxe-buildweb/blob/master/Dockerfile))
 
-> The docker image is updated daily by a cron job from ([Travis CI](https://travis-ci.org/xbgmsharp/ipxe-buildweb)).
+> The docker image is updated daily by a cron job from ([Travis CI](https://travis-ci.com/xbgmsharp/ipxe-buildweb)).
 
 * Supported architectures: x86-64
 
