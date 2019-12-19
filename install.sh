@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------
 
 # Upgrade system
-apt-get update & apt-get -y dist-upgrade
+apt-get update && apt-get -y dist-upgrade
 
 # Install basic compilation tools and dev libraries
 apt-get -y install make gcc zlib1g-dev libc6-dev libssl-dev libstdc++6-4.7-dev libc-dev-bin liblzma-dev
