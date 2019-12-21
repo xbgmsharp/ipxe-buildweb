@@ -72,7 +72,7 @@ while (my $file = readdir(DIR))
                                         push(@$bool, {file=> $file, type => "input", name => $type, value => $name, description => $desc});
                                 }
                         }
-			elsif ($line =~ /([a-zA-Z_]*)(\t+|\s+)([a-zA-Z\" ]+)$/g)
+			elsif ($line =~ /([a-zA-Z_]*)(\t+|\s+)([a-zA-Z0-9\:\/\"\.\% ]+)$/g)
 			{
 				#print "----------Found in 1\n";
 				#print "1 - $1\n";
