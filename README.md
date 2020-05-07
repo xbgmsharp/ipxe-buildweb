@@ -7,13 +7,13 @@ A Prebuilt binary web interface. Many users would prefer to be able to download 
 ## What
 A web-based user interface that provide a way for the user to select any relevant iPXE build options, specify any embedded script, etc, and then construct and download the appropriate file.
 
+## Where
+A Hosted build server using this project is made available by a 3rd-Party @ [rom-o-matic.dev](https://rom-o-matic.dev/). This project has no affiliation with the 3rd party hosting this build server and encourages indivduals to build their own binaries.
+
 ## How
 The user interface, is using HTML, CSS as well as Javascript (jQuery) and a suitable server-side language (such as Perl and PHP).
 All GUI options (git version/nics list/compile options) are generated dynamicaly using PHP.
 The build.fcgi script is written in Perl and was wrote by Michael Brown.
-
-## Test
-You can acces it via [rom-o-matic.eu](http://rom-o-matic.eu)
 
 ## Using Official DockerHub image [![Build Status](https://travis-ci.com/xbgmsharp/ipxe-buildweb.svg?branch=master)](https://travis-ci.com/xbgmsharp/ipxe-buildweb)
 
