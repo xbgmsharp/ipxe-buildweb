@@ -12,18 +12,13 @@ The user interface, is using HTML, CSS as well as Javascript (jQuery) and a suit
 All GUI options (git version/nics list/compile options) are generated dynamicaly using PHP.
 The build.fcgi script is written in Perl and was wrote by Michael Brown.
 
-## Test
-You can acces it via [rom-o-matic.eu](http://rom-o-matic.eu)
-
-## Using Official DockerHub image [![Build Status](https://travis-ci.com/xbgmsharp/ipxe-buildweb.svg?branch=master)](https://travis-ci.com/xbgmsharp/ipxe-buildweb)
+## Using Official DockerHub image
 
 [![dockeri.co](https://dockeri.co/image/xbgmsharp/ipxe-buildweb)](https://hub.docker.com/r/xbgmsharp/ipxe-buildweb)
 
 * Supported tags:
 
 `latest` - Latest ([Dockerfile](https://github.com/xbgmsharp/ipxe-buildweb/blob/master/Dockerfile))
-
-> The docker image is updated daily by a cron job from ([Travis CI](https://travis-ci.com/xbgmsharp/ipxe-buildweb)).
 
 * Supported architectures: x86-64
 
