@@ -40,8 +40,6 @@ docker run  -d \
 * Install Docker
 [Install documentation of Docker](https://docs.docker.com/engine/installation/)
 
-The Docker deb package are valid for Ubuntu and Debian.
-
 ```bash
 $ wget http://get.docker.io/ -O - | sh
 ```
@@ -50,7 +48,7 @@ $ wget http://get.docker.io/ -O - | sh
 
 The following command build the build directly from the github repository.
 
-The build process might take some time a while as it download the origin Ubuntu LTS 14.04 docker image.
+The build process might take some time a while as it download the origin Ubuntu LTS docker image.
 ```bash
 $ docker build --rm=true --no-cache=true -t xbgmsharp/ipxe-buildweb github.com/xbgmsharp/ipxe-buildweb.git
 ```
@@ -105,17 +103,12 @@ $ docker logs CONTAINER_ID
 
 * Enjoy!
 
-## Contributing
+## Support
 
-1. Fork it
-2. Create a branch (`git checkout -b my_markup`)
-3. Commit your changes (`git commit -am "Added Snarkdown"`)
-4. Push to the branch (`git push origin my_markup`)
-5. Create an [Issue][1] with a link to your branch
-6. Or Send me a [Pull Request][2]
+To get support, please create new [issue](https://github.com/xbgmsharp/ipxe-buildweb/issues)
 
-[1]: https://github.com/xbgmsharp/ipxe-buildweb/issues
-[2]: https://github.com/xbgmsharp/ipxe-buildweb/pull/new/master
+## Contribution
+I'm happy to accept Pull Requests!
 
 ## License
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
