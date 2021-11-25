@@ -1,12 +1,12 @@
 #------------------------------------------------------------------------
 # Dynamic iPXE image generator
 #
-# Copyright (C) 2012-2019 Francois Lacroix. All Rights Reserved.
+# Copyright (C) 2012-2021 Francois Lacroix. All Rights Reserved.
 # License:  GNU General Public License version 3 or later; see LICENSE.txt
 # Website:  http://ipxe.org, https://github.com/xbgmsharp/ipxe-buildweb
 #------------------------------------------------------------------------
 #
-# Ubuntu LTS 14.04 + Apache2 + module + my app
+# Ubuntu LTS + Apache2 + module + my app
 #
 # Base from ultimate-seed Dockerfile
 # https://github.com/pilwon/ultimate-seed
@@ -18,25 +18,28 @@
 # VERSION 0.0.1
 
 # Pull base image.
-FROM ubuntu:14.04
+FROM ubuntu:latest
 MAINTAINER Francois Lacroix <xbgmsharp@gmail.com>
 
 # Setup system and install tools
-RUN echo "initscripts hold" | dpkg --set-selections
+#RUN echo "initscripts hold" | dpkg --set-selections
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 RUN echo 'alias ll="ls -lah --color=auto"' >> /etc/bash.bashrc
+
+# Make sure the package repository is up to date
+RUN apt-get update && apt-get -yq upgrade
 
 # Set locale
 RUN apt-get -qqy install locales
-RUN locale-gen --purge en_US en_US.UTF-8
-RUN dpkg-reconfigure locales
+#RUN locale-gen --purge en_US en_US.UTF-8
+#RUN dpkg-reconfigure locales
+RUN localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+ENV LANG en_US.utf8
 ENV LC_ALL en_US.UTF-8
 
 # Set ENV
 ENV HOME /root
 ENV DEBIAN_FRONTEND noninteractive
-
-# Make sure the package repository is up to date
-RUN apt-get update && apt-get -y upgrade
 
 # Install SSH
 RUN apt-get install -y openssh-server
@@ -73,12 +76,12 @@ EXPOSE 22 80
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Make sure the package repository is up to date
-ONBUILD apt-get update && apt-get -y upgrade
+ONBUILD apt-get update && apt-get -yq upgrade
 ONBUILD apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN chmod +x /var/www/ipxe-buildweb/install.sh
 RUN chmod +x /etc/start.sh
 
-RUN /etc/init.d/apache2 start
+#RUN /etc/init.d/apache2 start
 #ENTRYPOINT ["/usr/bin/tail","-f","/var/log/apache2/access.log"]
 ENTRYPOINT ["/etc/start.sh"]
